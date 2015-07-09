@@ -1,0 +1,219 @@
+html
+  overflow-y: scroll
+
+/* HEADER */
+
+.page-header
+  padding-bottom: 2px
+  margin: 16px 0 8px
+  margin-top: 0
+  border-bottom-width: 2px
+  h5
+    margin-bottom: 2px
+
+header
+  margin-top: 40px
+
+#logo
+  display: block
+  width: 100%
+  margin-bottom: 30px
+  margin-top: 6px
+  margin-left: auto
+  margin-right: auto
+  max-width: 400px
+
+@media (min-width: 992px)
+  #logo
+    width: 100%
+    max-width: 100%
+    text-align: left
+
+/* FACETS */
+
+#facets
+  margin-top: 10px
+  label
+    cursor: pointer
+  li.refined .facet_link
+    color: #F6624E
+    &:hover, &.hover
+      color: #333333
+  .additional-facets, .show-less
+    display: none
+  .facet-slider
+    margin: 10px 0 20px
+    .slider-wrapper
+      display: inline-block
+      padding: 0 10px
+      width: 81%
+    .slider
+      width: 100%
+      .slider-selection
+        background: #FDDED9
+      .slider-handle
+        background: #F6624E
+        opacity: 1
+      .slider-track
+        background: #DDD
+  .facet_link
+    color: #333333
+    font-size: 13px
+    &:hover, &.hover
+      color: #F6624E
+      text-decoration: none
+  .facet
+    margin-top: 20px
+    h5
+      text-transform: uppercase
+
+/* HITS */
+
+#hits
+  padding: 10px 0
+  min-height: 600px
+  .hit_price
+    color: #F6624E
+    margin-top: 0
+    margin-left: 20px
+  .hit_name
+    margin-top: 0
+  .hit_tags
+    text-align: right
+    li
+      background: #FAFAFA
+      border: 1px solid #EEE
+      padding: 2px 5px 1px
+      font-size: 12px
+      margin-bottom: 4px
+      em
+        font-style: normal
+        font-weight: bold
+        text-decoration: none
+        background: none
+  .hit
+    padding-bottom: 14px
+    margin-bottom: 14px
+    border-bottom: 1px solid #EEE
+  em
+    font-style: normal
+    text-decoration: none
+    background: #FDDED9
+  p
+    font-size: 13px
+    min-height: 20px
+    color: #999
+
+p#no-hits
+  padding: 40px
+  text-align: center
+  font-weight: 300
+  font-size: 22px
+  font-style: italic
+
+/* SEARCH INPUT */
+
+#search_input
+  padding: 0
+  margin-top: 4px
+  margin-bottom: 20px
+  span.input-group-addon
+    &#input-remove
+      display: none
+    border: none
+    background: none
+    font-size: 16px
+    padding: 0
+    color: #9F9F9F
+  input#q
+    border: none
+    outline: none
+    -webkit-box-shadow: none
+    box-shadow: none
+    font-size: 16px
+    padding: 0
+    font-weight: 100
+    line-height: 1
+    color: #333
+    &::-webkit-input-placeholder, &:-ms-input-placeholder, &::-moz-placeholder, &:-moz-placeholder
+      color: #9F9F9F
+
+@media (min-width: 480px)
+  #search_input
+    input#q
+      font-size: 22px
+    span.input-group-addon
+      font-size: 14px
+
+@media (min-width: 768px)
+  #search_input
+    input#q
+      font-size: 28px
+    span.input-group-addon
+      font-size: 19px
+
+@media (min-width: 992px)
+  #search_input
+    margin-bottom: 0
+    span.input-group-addon
+      font-size: 21px
+    input#q
+      font-size: 32px
+
+#input-search.glyphicon-remove
+  cursor: pointer
+
+/* STATS */
+
+#stats h5
+  margin-top: 0
+  margin-bottom: 4px
+  span
+    font-weight: 300
+    margin-left: 6px
+
+/* SORTS */
+
+#sort-by
+  font-weight: 300
+  margin-right: 4px
+  position: relative
+  top: -2px
+
+#sort-button
+  background: none
+  border: none
+  position: relative
+  top: -3px
+  padding: 0
+
+.btn-group.open #sort-button
+  -webkit-box-shadow: none
+  box-shadow: none
+
+/* CHECKBOXES */
+
+.checkbox-hidden
+  display: none
+  &:checked + .checkbox-label
+    &:hover:before
+      background-position: 1px -21px
+    &:before
+      background-position: 1px 3px
+  + .checkbox-label
+    margin-left: 25px
+    position: relative
+    font-weight: normal
+    &:hover:before
+      background-position: -23px -22px
+    &:before
+      content: ""
+      position: absolute
+      top: 0
+      left: -20px
+      width: 16px
+      height: 16px
+      background: url(../images/icons.png) -23px 2px no-repeat
+
+.checkbox-label
+  cursor: pointer
