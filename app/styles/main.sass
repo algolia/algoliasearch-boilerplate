@@ -1,227 +1,69 @@
+$primary-color: #ED5565;
+
+
+/* GENERAL ------------------------- */
+
 html
   overflow-y: scroll
 
-body, h1, h2, h3, h4, h5
-  font-family: 'Open Sans'
+body
+  margin: 0 0 100px
 
-/* HEADER */
+body, h1, h2, h3, h4, h5, p, input
+  font-family: 'Helvetica Neue', Helvetica, sans-serif
 
-.page-header
-  padding-bottom: 2px
-  margin: 16px 0 8px
-  margin-top: 0
-  border-bottom-width: 2px
-  h5
-    margin-bottom: 2px
+header .container, section, main
+  width: 1000px
+  margin: 0 auto
 
+#left-column
+  width: 23%
+  float: left
+
+#right-column
+  width: 74%
+  margin-left: 26%
+
+
+
+/* HEADER ------------------------- */
 header
-  margin-top: 40px
-
-#logo
-  display: block
-  width: 100%
-  margin-bottom: 30px
-  margin-top: 6px
-  margin-left: auto
-  margin-right: auto
-  max-width: 400px
-
-@media (min-width: 992px)
+  margin-bottom: 40px
+  height: 80px
+  background: #DDD
   #logo
-    width: 100%
-    max-width: 100%
-    text-align: left
+    width: 20%
+    max-width: 20%
+    margin-top: 9px
+    float: left
 
-/* FACETS */
 
-#facets
-  margin-top: 10px
-  label
-    cursor: pointer
-  li.refined .facet_link
-    color: #F6624E
-    &:hover, &.hover
-      color: #333333
-  .additional-facets, .show-less
-    display: none
-  .facet-slider
-    margin: 10px 0 20px
-    .slider-wrapper
-      display: inline-block
-      padding: 0 10px
-      width: 81%
-    .slider
-      width: 100%
-      .slider-selection
-        background: #FDDED9
-      .slider-handle
-        background: #F6624E
-        opacity: 1
-      .slider-track
-        background: #DDD
-  .facet_link
-    color: #333333
-    font-size: 13px
-    &:hover, &.hover
-      color: #F6624E
-      text-decoration: none
-  .facet
-    margin-top: 20px
-    h5
-      text-transform: uppercase
 
-/* HITS */
+/* AUTOCOMPLETE ------------------------- */
 
-#hits
-  padding: 10px 0
-  min-height: 600px
-  .hit_price
-    color: #F6624E
-    margin-top: 0
-    margin-left: 20px
-  .hit_name
-    margin-top: 0
-  .hit_tags
-    text-align: right
-    li
-      background: #FAFAFA
-      border: 1px solid #EEE
-      padding: 2px 5px 1px
-      font-size: 12px
-      margin-bottom: 4px
-      em
-        font-style: normal
-        font-weight: bold
-        text-decoration: none
-        background: none
-  .hit
-    padding-bottom: 14px
-    margin-bottom: 14px
-    border-bottom: 1px solid #EEE
-  em
-    font-style: normal
-    text-decoration: none
-    background: #FDDED9
-  p
-    font-size: 13px
-    min-height: 20px
-    color: #999
-
-p#no-hits
-  padding: 40px
-  text-align: center
-  font-weight: 300
-  font-size: 22px
-  font-style: italic
-
-/* SEARCH INPUT */
-
-#search_input
-  padding: 0
-  span.input-group-addon
-    &#input-remove
-      display: none
-    font-size: 16px
-  input#q
-    outline: none
-    -webkit-box-shadow: none
-    box-shadow: none
-    font-size: 16px
+#autocomplete-input
+  margin-left: 30%
+  text-align: right
+  input
+    width: 40%
+    padding: 12px 20px
+    margin-top: 21px
+    border-radius: 20px
+    border: none
+    outline: 0
+  &:focus
+    outline: 0
+  &::-webkit-input-placeholder, &:-moz-placeholder, &:-ms-input-placeholder
     font-weight: 100
-    color: #333
-    &::-webkit-input-placeholder, &:-ms-input-placeholder, &::-moz-placeholder, &:-moz-placeholder
-      color: #9F9F9F
-
-@media (min-width: 480px)
-  #search_input
-    input#q
-      font-size: 22px
-    span.input-group-addon
-      font-size: 14px
-
-@media (min-width: 768px)
-  #search_input
-    input#q
-      font-size: 28px
-    span.input-group-addon
-      font-size: 19px
-
-@media (min-width: 992px)
-  #search_input
-    margin-bottom: 0
-    span.input-group-addon
-      font-size: 21px
-    input#q
-      font-size: 32px
-
-#input-search.glyphicon-remove
-  cursor: pointer
-
-/* STATS */
-
-#stats h5
-  margin-top: 20px
-  margin-bottom: 4px
-  span
-    font-weight: 300
-    margin-left: 6px
-
-/* SORTS */
-
-#sort-by
-  font-weight: 300
-  margin-right: 4px
-  position: relative
-  top: -2px
-
-#sort-button
-  background: none
-  border: none
-  position: relative
-  top: -3px
-  padding: 0
-
-.btn-group.open #sort-button
-  -webkit-box-shadow: none
-  box-shadow: none
-
-/* CHECKBOXES */
-
-.checkbox-hidden
-  display: none
-  &:checked + .checkbox-label
-    &:hover:before
-      background-position: 1px -21px
-    &:before
-      background-position: 1px 3px
-  + .checkbox-label
-    margin-left: 25px
-    position: relative
-    font-weight: normal
-    &:hover:before
-      background-position: -23px -22px
-    &:before
-      content: ""
-      position: absolute
-      top: 0
-      left: -20px
-      width: 16px
-      height: 16px
-      background: url(../images/icons.png) -23px 2px no-repeat
-
-.checkbox-label
-  cursor: pointer
-
-/* AUTO-COMPLETION MENU */
+    color: #999
 .twitter-typeahead
   width: 100%
-  display: table-cell !important
   .tt-input
     width: 100%
     outline: none
   .tt-dropdown-menu
-    width: 200%
-    margin-left: -100%
+    width: 80%
+    margin-left: 20%
     padding: 0
     background-color: #fff
     border: 1px solid rgba(0, 0, 0, 0.2)
@@ -238,22 +80,277 @@ p#no-hits
       cursor: pointer
       &.tt-cursor
         background-color: #FDDED9
-      em
-        font-weight: bold
-        font-style: normal
-      .media
-        .media-object
-          width: 40px
-          height: 50px
-          overflow: hidden
-          img
-            max-width: 100%
-        h4.media-heading
+      .product-suggestion
+        font-size: 0
+      .suggestion-image
+        display: inline-block
+        width: 10%
+        img
+          max-width: 50px
+          max-height: 50px
+      .suggestion-content
+        display: inline-block
+        width: 89%
+        margin-left: 1%
+        font-size: 13px
+        font-weight: 300
+        vertical-align: top
+        .suggestion-price
+          float: right
+          color: $primary-color
+          margin-left: 0 0 4px 10px
+          font-weight: normal
+        .suggestion-name
+          margin: 0 0 4px
+          font-weight: normal
+        em
+          background: #FBDDE0
+          font-style: normal
+        .suggestion-description
           font-size: 12px
-        .media-body
-          blockquote
-            padding: 0 0 0 5px
-            border-left-width: 3px
-            font-size: 12px
-          .price
-            color: #F6624E
+          color: #999
+          margin: 0
+#autocomplete-icon
+  position: relative
+  &:before
+    content: ""
+    position: absolute
+    bottom: 10px;
+    right: 12px;
+    width: 16px;
+    height: 16px;
+    background: url(/images/search_icon_small.png) no-repeat
+    cursor: default
+  &.empty:before
+    background-image: url(/images/empty_icon_small.png)
+    cursor: pointer
+
+
+/* SEARCH INPUT ------------------------- */
+
+#section-input
+  margin-top: 50px
+  height: 80px
+
+#search-input
+  width: 74%
+  margin-left: 26%
+  padding: 10px 0 6px
+  border: none
+  border-bottom: 5px solid #EEE
+  font-size: 28px
+  font-weight: 100
+  outline: 0
+  transition: border-color 0.3s ease-in
+  &:focus
+    outline: 0
+    transition: border-color 0.3s ease-in
+    border-color: $primary-color
+  &::-webkit-input-placeholder, &:-moz-placeholder, &:-ms-input-placeholder
+    font-weight: 100
+    color: #999
+
+#search-input-icon
+  position: relative
+  &:before
+    content: ""
+    position: absolute
+    bottom: 15px
+    right: 0px
+    width: 20px
+    height: 20px
+    background: url(/images/search_icon.png) no-repeat
+    cursor: default
+  &.empty:before
+    background-image: url(/images/empty_icon.png)
+    cursor: pointer
+
+
+
+/* HITS ------------------------- */
+
+#hits
+  border-top: 2px solid #EEE
+  margin: 4px 0
+  padding: 10px 0
+
+.hit
+  padding: 8px 0
+  border-bottom: 1px solid #EEE
+  font-size: 0
+
+.hit-image
+  display: inline-block
+  width: 16%
+  img
+    max-width: 100%
+    max-height: 180px
+
+.hit-content
+  display: inline-block
+  width: 83%
+  margin-left: 1%
+  font-size: 13px
+  font-weight: 300
+  vertical-align: top
+  .hit-price
+    float: right
+    color: $primary-color
+    font-size: 20px
+    margin-left: 20px
+    margin-top: 0
+    font-weight: normal
+  .hit-name
+    margin-top: 0
+    font-weight: normal
+  em
+    background: #FBDDE0
+    font-style: normal
+  .hit-description
+    color: #999
+
+
+
+/* PAGINATION ------------------------- */
+
+#pagination
+  margin-top: 60px
+  ul
+    list-style-type: none
+    text-align: center
+    font-size: 0
+  li
+    display: inline
+    font-size: 14px
+  a
+    color: #000
+    text-decoration: none
+    border: 1px solid #EEE
+    border-right: none
+    padding: 8px 12px
+    &:hover
+      background: #F5F5F5
+  li
+    &:first-child a
+      border-top-left-radius: 4px
+      border-bottom-left-radius: 4px
+    &:last-child a
+      border-top-right-radius: 4px
+      border-bottom-right-radius: 4px
+      border-right: 1px solid #EEE
+    &.active a
+      color: white
+      background: $primary-color
+      border-color: $primary-color
+      &:hover
+        cursor: default
+    &.disabled a
+      cursor: not-allowed
+      &:hover
+        background: none
+
+
+
+/* SORT-BY ------------------------- */
+
+#sort-by
+  float: right
+  position: relative
+  color: #999
+  font-weight: 300
+  select
+    padding-right: 14px
+    background: none
+    border: none
+    font-size: 16px
+    outline: none
+    cursor: pointer
+    -webkit-appearance: none
+    -moz-appearance: none
+  .caret
+    position: absolute
+    right: 0
+    top: 8px
+    display: inline-block
+    width: 0
+    height: 0
+    margin-left: 2px
+    vertical-align: middle
+    border-top: 4px dashed
+    border-right: 4px solid transparent
+    border-left: 4px solid transparent
+    pointer-events: none
+    color: #000
+
+
+
+/* STATS ------------------------- */
+
+#stats
+  min-height: 18px
+  .found-in
+    font-size: 12px
+    color: #999
+
+/* FACETS ------------------------- */
+
+.facet
+  margin-bottom: 24px
+  h5
+    text-transform: uppercase
+    border-bottom: 2px solid #EEE
+    margin: 0 0 6px
+    padding: 0 0 6px
+  ul
+    list-style-type: none
+    margin: 0
+    padding: 0
+  li
+    margin-bottom: 3px
+
+.facet-link
+  color: #000
+  text-decoration: none
+  line-height: 1.2
+  font-size: 13px
+  &:hover
+    color: $primary-color
+
+li.refined .facet-link
+  color: $primary-color
+
+.facet li.refined .facet-link:hover
+  color: $primary-color
+  text-decoration: line-through
+
+.facet-count
+  float: right
+  position: relative
+  top: 3px
+  color: #999
+
+/* Checkboxes
+
+.facet-disjunctive
+  margin-left: 18px
+  position: relative
+  font-weight: normal
+  &:before
+    content: ""
+    position: absolute
+    top: 1px
+    left: -18px
+    width: 16px
+    height: 16px
+    background: url(/images/icons.png) -25px 0 no-repeat
+  &:hover:before
+    background-position: -25px -24px
+
+.facet li.refined .facet-disjunctive
+  &:before
+    background-position: -1px 0
+  &:hover:before
+    background-position: -49px 0px
+
+
+
