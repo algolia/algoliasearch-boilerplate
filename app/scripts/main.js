@@ -22,6 +22,7 @@ $(document).ready(function() {
 
   // DOM binding
   var $inputField = $('#q');
+  var $autocompleteField = $('#aq');
   var $hits = $('#hits');
   var $stats = $('#stats');
   var $facets = $('#facets');
@@ -33,9 +34,40 @@ $(document).ready(function() {
   var facetTemplate = Hogan.compile($('#facet-template').text());
   var sliderTemplate = Hogan.compile($('#slider-template').text());
   var paginationTemplate = Hogan.compile($('#pagination-template').text());
+  var productSuggestionTemplate = Hogan.compile($('#product-suggestion-template').text());
+  var manufacturerSuggestionTemplate = Hogan.compile($('#manufacturer-suggestion-template').text());
+  var categorySuggestionTemplate = Hogan.compile($('#category-suggestion-template').text());
 
   // Client initialization
   var algolia = algoliasearch(APPLICATION_ID, SEARCH_ONLY_API_KEY);
+
+  // autocompletion menu
+  $autocompleteField.typeahead({ hint: false, highlight: false }, [
+    {
+      name: 'products',
+      source: algolia.initIndex('bestbuy').ttAdapter({ hitsPerPage: 3 }),
+      templates: {
+        header: '<h3 class="tt-header">Products</h3>',
+        suggestion: productSuggestionTemplate.render.bind(productSuggestionTemplate)
+      }
+    },
+    {
+      name: 'manufacturers',
+      source: algolia.initIndex('bestbuy_manufacturers').ttAdapter({ hitsPerPage: 3 }),
+      templates: {
+        header: '<h3 class="tt-header">Manufacturers</h3>',
+        suggestion: manufacturerSuggestionTemplate.render.bind(manufacturerSuggestionTemplate)
+      }
+    },
+    {
+      name: 'categories',
+      source: algolia.initIndex('bestbuy_categories').ttAdapter({ hitsPerPage: 3 }),
+      templates: {
+        header: '<h3 class="tt-header">Categories</h3>',
+        suggestion: categorySuggestionTemplate.render.bind(categorySuggestionTemplate)
+      }
+    }
+  ]);
 
   // Helper initialization
   var params = {

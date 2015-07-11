@@ -1,6 +1,9 @@
 html
   overflow-y: scroll
 
+body, h1, h2, h3, h4, h5
+  font-family: 'Open Sans'
+
 /* HEADER */
 
 .page-header
@@ -115,25 +118,16 @@ p#no-hits
 
 #search_input
   padding: 0
-  margin-top: 4px
-  margin-bottom: 20px
   span.input-group-addon
     &#input-remove
       display: none
-    border: none
-    background: none
     font-size: 16px
-    padding: 0
-    color: #9F9F9F
   input#q
-    border: none
     outline: none
     -webkit-box-shadow: none
     box-shadow: none
     font-size: 16px
-    padding: 0
     font-weight: 100
-    line-height: 1
     color: #333
     &::-webkit-input-placeholder, &:-ms-input-placeholder, &::-moz-placeholder, &:-moz-placeholder
       color: #9F9F9F
@@ -166,7 +160,7 @@ p#no-hits
 /* STATS */
 
 #stats h5
-  margin-top: 0
+  margin-top: 20px
   margin-bottom: 4px
   span
     font-weight: 300
@@ -217,3 +211,48 @@ p#no-hits
 
 .checkbox-label
   cursor: pointer
+
+/* AUTO-COMPLETION MENU */
+.twitter-typeahead
+  width: 100%
+  .tt-input
+    width: 100%
+    outline: none
+  .tt-dropdown-menu
+    width: 200%
+    margin-left: -100%
+    padding: 0
+    background-color: #fff
+    border: 1px solid rgba(0, 0, 0, 0.2)
+    .tt-header
+      margin: 0
+      padding: 5px 10px
+      background: #f1f1f1
+      border-bottom: 1px solid #ccc
+      font-size: 14px
+      font-weight: bold
+    .tt-suggestion
+      text-align: left
+      padding: 7px
+      cursor: pointer
+      &.tt-cursor
+        background-color: #FDDED9
+      em
+        font-weight: bold
+        font-style: normal
+      .media
+        .media-object
+          width: 40px
+          height: 50px
+          overflow: hidden
+          img
+            max-width: 100%
+        h4.media-heading
+          font-size: 12px
+        .media-body
+          blockquote
+            padding: 0 0 0 5px
+            border-left-width: 3px
+            font-size: 12px
+          .price
+            color: #F6624E
