@@ -191,7 +191,7 @@ $(document).ready(function() {
   function bindSearchObjects(state) {
     // Bind Sliders
     var sliders = $.map(FACET_CONFIG, function(facet) { return (facet.type && facet.type === 'slider') ? facet.name : null; });
-    for (facetIndex = 0; facetIndex < sliders.length; ++facetIndex) {
+    function configureSlider(facetIndex) {
       var facetName = sliders[facetIndex];
       var slider = $('#'+facetName+'-slider');
       var sliderOptions = {
@@ -214,6 +214,9 @@ $(document).ready(function() {
         }
       };
       slider.ionRangeSlider(sliderOptions);
+    }
+    for (facetIndex = 0; facetIndex < sliders.length; ++facetIndex) {
+      configureSlider(facetIndex);
     }
   }
 
