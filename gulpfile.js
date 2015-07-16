@@ -8,7 +8,8 @@ var gulp = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
     open = require('open'),
     notify = require('gulp-notify'),
-    file = require('gulp-file');
+    file = require('gulp-file'),
+    ghPages = require('gulp-gh-pages');
 
 // Modules for webserver and livereload
 var express = require('express'),
@@ -107,6 +108,10 @@ gulp.task('watch', ['lint'], function() {
 
 gulp.task('open-browser', ['watch'], function(){
   open('http://0.0.0.0:4000');
+});
+
+gulp.task('deploy', function() {
+  return gulp.src('./dist/**/*').pipe(ghPages());
 });
 
 gulp.task('default', ['build', 'watch', 'open-browser']);
