@@ -53,31 +53,33 @@ $(document).ready(function() {
   // AUTOCOMPLETE
   // ============
 
-  $autocompleteField.typeahead({ hint: false, highlight: false }, [
-  {
-    name: 'products',
-    source: algolia.initIndex('bestbuy').ttAdapter({ hitsPerPage: 3 }),
-    templates: {
-      header: '<h3 class="tt-header">Products</h3>',
-      suggestion: productSuggestionTemplate.render.bind(productSuggestionTemplate)
+  $autocompleteField.autocomplete({
+    hint: false
+  }, [
+    {
+      name: 'products',
+      source: algolia.initIndex('bestbuy').ttAdapter({ hitsPerPage: 3 }),
+      templates: {
+        header: '<h3 class="aa-header">Products</h3>',
+        suggestion: productSuggestionTemplate.render.bind(productSuggestionTemplate)
+      }
+    },
+    {
+      name: 'manufacturers',
+      source: algolia.initIndex('bestbuy_manufacturers').ttAdapter({ hitsPerPage: 3 }),
+      templates: {
+        header: '<h3 class="aa-header">Manufacturers</h3>',
+        suggestion: manufacturerSuggestionTemplate.render.bind(manufacturerSuggestionTemplate)
+      }
+    },
+    {
+      name: 'categories',
+      source: algolia.initIndex('bestbuy_categories').ttAdapter({ hitsPerPage: 3 }),
+      templates: {
+        header: '<h3 class="aa-header">Categories</h3>',
+        suggestion: categorySuggestionTemplate.render.bind(categorySuggestionTemplate)
+      }
     }
-  },
-  {
-    name: 'manufacturers',
-    source: algolia.initIndex('bestbuy_manufacturers').ttAdapter({ hitsPerPage: 3 }),
-    templates: {
-      header: '<h3 class="tt-header">Manufacturers</h3>',
-      suggestion: manufacturerSuggestionTemplate.render.bind(manufacturerSuggestionTemplate)
-    }
-  },
-  {
-    name: 'categories',
-    source: algolia.initIndex('bestbuy_categories').ttAdapter({ hitsPerPage: 3 }),
-    templates: {
-      header: '<h3 class="tt-header">Categories</h3>',
-      suggestion: categorySuggestionTemplate.render.bind(categorySuggestionTemplate)
-    }
-  }
   ]);
   $autocompleteField.on('keyup', function() {
     $('#autocomplete-icon').toggleClass('empty', $(this).val().trim());
