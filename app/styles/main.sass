@@ -306,6 +306,57 @@ main
     font-size: 12px
     color: #999
 
+/* No-result ------------------------- */
+
+.no-results #pagination, .no-results #sort-by, .no-results #stats, .no-results #facets
+  display: none
+
+#no-results-message
+  text-align: center
+  p
+    font-size: 28px
+    font-weight: 100
+
+#no-results-message
+  ul
+    list-style-type: none
+  li
+    font-size: 12px
+    position: relative
+    display: inline-block
+    margin: 4px 2px
+    padding: 4px 28px 4px 8px
+    color: #999
+    border: 1px solid #ddd
+    border-radius: 12px
+  span.value
+    font-weight: bold
+    color: #000
+  a.remove img
+    position: absolute
+    top: 3px
+    right: 5px
+    float: right
+    width: 17px
+    height: 17px
+    opacity: .5
+    &:hover img
+      opacity: 1
+
+a.clear-all
+  font-size: 12px
+  line-height: 1
+  display: inline-block
+  margin: 10px
+  padding: 8px 12px
+  text-decoration: none
+  color: black
+  border: 2px solid #ddd
+  border-radius: 4px
+  &:hover
+    transition: border-color .3s ease-in
+    border-color: #999
+
 /* FACETS ------------------------- */
 
 .facet

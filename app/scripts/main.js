@@ -6,18 +6,19 @@ $(document).ready(function() {
   // ==============
 
   // Replace with your own values
-  var APPLICATION_ID = 'latency';
-  var SEARCH_ONLY_API_KEY = '6be0576ff61c053d5f9a3225e2a90f76';
-  var INDEX_NAME = 'bestbuy';
-  var HITS_PER_PAGE = 10;
+  var APPLICATION_ID       = 'latency';
+  var SEARCH_ONLY_API_KEY  = '6be0576ff61c053d5f9a3225e2a90f76';
+  var INDEX_NAME           = 'bestbuy';
+  var HITS_PER_PAGE        = 10;
   var MAX_VALUES_PER_FACET = 8;
-  var FACET_CONFIG = [
-  { name: 'type', title: 'Type', disjunctive: false, sortFunction: sortByCountDesc },
-  { name: 'shipping', title: 'Shipping', disjunctive: false, sortFunction: sortByCountDesc },
-  { name: 'customerReviewCount', title: '# Reviews', disjunctive: true, type: 'slider' },
-  { name: 'category', title: 'Category', disjunctive: true, sortFunction: sortByCountDesc, topListIfRefined: true },
-  { name: 'salePrice_range', title: 'Price range', disjunctive: true, sortFunction: sortByName },
-  { name: 'manufacturer', title: 'Manufacturer', disjunctive: true, sortFunction: sortByName, topListIfRefined: true }
+  var FACETS_LABELS        = { type: 'Type', shipping: 'Shipping', customerReviewCount: '# Reviews', type: 'Type'};
+  var FACET_CONFIG         = [
+    { name: 'type', title: 'Type', disjunctive: false, sortFunction: sortByCountDesc },
+    { name: 'shipping', title: 'Shipping', disjunctive: false, sortFunction: sortByCountDesc },
+    { name: 'customerReviewCount', title: '# Reviews', disjunctive: true, type: 'slider' },
+    { name: 'category', title: 'Category', disjunctive: true, sortFunction: sortByCountDesc, topListIfRefined: true },
+    { name: 'salePrice_range', title: 'Price range', disjunctive: true, sortFunction: sortByName },
+    { name: 'manufacturer', title: 'Manufacturer', disjunctive: true, sortFunction: sortByName, topListIfRefined: true }
   ];
 
   // Client + Helper initialization
@@ -31,19 +32,21 @@ $(document).ready(function() {
   var algoliaHelper = algoliasearchHelper(algolia, INDEX_NAME, params);
 
   // DOM binding
-  var $inputField = $('#search-input');
+  var $inputField        = $('#search-input');
   var $autocompleteField = $('#aq');
-  var $hits = $('#hits');
-  var $stats = $('#stats');
-  var $facets = $('#facets');
-  var $pagination = $('#pagination');
+  var $hits              = $('#hits');
+  var $stats             = $('#stats');
+  var $facets            = $('#facets');
+  var $main              = $('main');
+  var $pagination        = $('#pagination');
 
   // Hogan templates binding
-  var hitTemplate        = Hogan.compile($('#hit-template').text());
-  var statsTemplate      = Hogan.compile($('#stats-template').text());
-  var facetTemplate      = Hogan.compile($('#facet-template').text());
-  var sliderTemplate     = Hogan.compile($('#slider-template').text());
-  var paginationTemplate = Hogan.compile($('#pagination-template').text());
+  var hitTemplate                    = Hogan.compile($('#hit-template').text());
+  var statsTemplate                  = Hogan.compile($('#stats-template').text());
+  var facetTemplate                  = Hogan.compile($('#facet-template').text());
+  var sliderTemplate                 = Hogan.compile($('#slider-template').text());
+  var noResultsTemplate              = Hogan.compile($('#no-results-template').text());
+  var paginationTemplate             = Hogan.compile($('#pagination-template').text());
   var productSuggestionTemplate      = Hogan.compile($('#product-suggestion-template').text());
   var manufacturerSuggestionTemplate = Hogan.compile($('#manufacturer-suggestion-template').text());
   var categorySuggestionTemplate     = Hogan.compile($('#category-suggestion-template').text());
@@ -115,6 +118,7 @@ $(document).ready(function() {
     renderFacets(content, state);
     bindSearchObjects(state);
     renderPagination(content);
+    handleNoResults(content);
   });
 
   // Initial search
@@ -246,6 +250,56 @@ $(document).ready(function() {
 
 
 
+  // NO RESULTS
+  // ==========
+
+   function handleNoResults(content) {
+     if (content.nbHits > 0) {
+       $main.removeClass('no-results');
+       return ;
+     }
+     $main.addClass('no-results');
+
+     var filters = [];
+     var i;
+     var j;
+
+     for (i in algoliaHelper.state.facetsRefinements) {
+       filters.push({
+         class: 'toggle-refine',
+         facet: i,
+         facet_value: algoliaHelper.state.facetsRefinements[i],
+         label: $.map(FACET_CONFIG, function (e) { if (e.name === i ) return e.title; })[0] + ': ',
+         label_value: algoliaHelper.state.facetsRefinements[i]
+       });
+     }
+     for (i in algoliaHelper.state.disjunctiveFacetsRefinements) {
+       for (j in algoliaHelper.state.disjunctiveFacetsRefinements[i]) {
+         filters.push({
+           class: 'toggle-refine',
+           facet: i,
+           facet_value: algoliaHelper.state.disjunctiveFacetsRefinements[i][j],
+           label: $.map(FACET_CONFIG, function (e) { if (e.name === i ) return e.title; })[0] + ': ',
+           label_value: algoliaHelper.state.disjunctiveFacetsRefinements[i][j]
+         });
+       }
+     }
+     for (i in algoliaHelper.state.numericRefinements) {
+       for (j in algoliaHelper.state.numericRefinements[i]) {
+         filters.push({
+           class: 'remove-numeric-refine',
+           facet: i,
+           facet_value: j,
+           label: $.map(FACET_CONFIG, function (e) { if (e.name === i ) return e.title; })[0] + ' ',
+           label_value: j + ' ' + algoliaHelper.state.numericRefinements[i][j]
+         });
+       }
+     }
+     $hits.html(noResultsTemplate.render({query: content.query, filters: filters}));
+   }
+
+
+
   // EVENTS BINDING
   // ==============
 
@@ -304,5 +358,5 @@ $(document).ready(function() {
   }
 
 
-});
 
+});
