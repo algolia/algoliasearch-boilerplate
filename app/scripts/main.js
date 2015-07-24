@@ -6,13 +6,13 @@ $(document).ready(function() {
   // ==============
 
   // Replace with your own values
-  var APPLICATION_ID       = 'latency';
-  var SEARCH_ONLY_API_KEY  = '6be0576ff61c053d5f9a3225e2a90f76';
-  var INDEX_NAME           = 'bestbuy';
-  var HITS_PER_PAGE        = 10;
+  var APPLICATION_ID = 'latency';
+  var SEARCH_ONLY_API_KEY = '6be0576ff61c053d5f9a3225e2a90f76';
+  var INDEX_NAME = 'bestbuy';
+  var HITS_PER_PAGE = 10;
   var MAX_VALUES_PER_FACET = 8;
-  var FACETS_LABELS        = { type: 'Type', shipping: 'Shipping', customerReviewCount: '# Reviews', type: 'Type'};
-  var FACET_CONFIG         = [
+  var FACETS_LABELS = { type: 'Type', shipping: 'Shipping', customerReviewCount: '# Reviews', type: 'Type'};
+  var FACET_CONFIG = [
     { name: 'type', title: 'Type', disjunctive: false, sortFunction: sortByCountDesc },
     { name: 'shipping', title: 'Shipping', disjunctive: false, sortFunction: sortByCountDesc },
     { name: 'customerReviewCount', title: '# Reviews', disjunctive: true, type: 'slider' },
@@ -32,24 +32,24 @@ $(document).ready(function() {
   var algoliaHelper = algoliasearchHelper(algolia, INDEX_NAME, params);
 
   // DOM binding
-  var $inputField        = $('#search-input');
+  var $inputField = $('#search-input');
   var $autocompleteField = $('#aq');
-  var $hits              = $('#hits');
-  var $stats             = $('#stats');
-  var $facets            = $('#facets');
-  var $main              = $('main');
-  var $pagination        = $('#pagination');
+  var $hits = $('#hits');
+  var $stats = $('#stats');
+  var $facets = $('#facets');
+  var $main = $('main');
+  var $pagination = $('#pagination');
 
   // Hogan templates binding
-  var hitTemplate                    = Hogan.compile($('#hit-template').text());
-  var statsTemplate                  = Hogan.compile($('#stats-template').text());
-  var facetTemplate                  = Hogan.compile($('#facet-template').text());
-  var sliderTemplate                 = Hogan.compile($('#slider-template').text());
-  var noResultsTemplate              = Hogan.compile($('#no-results-template').text());
-  var paginationTemplate             = Hogan.compile($('#pagination-template').text());
-  var productSuggestionTemplate      = Hogan.compile($('#product-suggestion-template').text());
+  var hitTemplate = Hogan.compile($('#hit-template').text());
+  var statsTemplate = Hogan.compile($('#stats-template').text());
+  var facetTemplate = Hogan.compile($('#facet-template').text());
+  var sliderTemplate = Hogan.compile($('#slider-template').text());
+  var noResultsTemplate = Hogan.compile($('#no-results-template').text());
+  var paginationTemplate = Hogan.compile($('#pagination-template').text());
+  var productSuggestionTemplate = Hogan.compile($('#product-suggestion-template').text());
   var manufacturerSuggestionTemplate = Hogan.compile($('#manufacturer-suggestion-template').text());
-  var categorySuggestionTemplate     = Hogan.compile($('#category-suggestion-template').text());
+  var categorySuggestionTemplate = Hogan.compile($('#category-suggestion-template').text());
 
 
 
@@ -146,9 +146,9 @@ $(document).ready(function() {
     var facetsHtml = '';
     for (var facetIndex = 0; facetIndex < FACET_CONFIG.length; ++facetIndex) {
       var facetParams = FACET_CONFIG[facetIndex]; 
-      var facetName   = facetParams.name;
-      var facetTitle  = facetParams.title;
-      var facetType   = facetParams.type || '';
+      var facetName = facetParams.name;
+      var facetTitle = facetParams.title;
+      var facetType = facetParams.type || '';
       var facetResult = content.getFacetByName(facetName);
       if (!facetResult) continue;
       var facetContent = {};
@@ -162,9 +162,9 @@ $(document).ready(function() {
         facetContent.min = facetResult.stats.min;
         facetContent.max = facetResult.stats.max;
         var from = state.getNumericRefinement(facetName, '>=') || facetContent.min;
-        var to   = state.getNumericRefinement(facetName, '<=') || facetContent.max;
+        var to = state.getNumericRefinement(facetName, '<=') || facetContent.max;
         facetContent.from = Math.min(facetContent.max, Math.max(facetContent.min, from));
-        facetContent.to   = Math.min(facetContent.max, Math.max(facetContent.min, to));
+        facetContent.to = Math.min(facetContent.max, Math.max(facetContent.min, to));
         facetsHtml +=  sliderTemplate.render(facetContent);
       }
 
@@ -203,10 +203,10 @@ $(document).ready(function() {
       var sliderOptions = {
         type: "double",
         grid: true,
-        min:  slider.data('min'),
-        max:  slider.data('max'),
+        min: slider.data('min'),
+        max: slider.data('max'),
         from: slider.data('from'),
-        to:   slider.data('to'),
+        to: slider.data('to'),
         prettify: function (num) {
           return '#' + num;
         },
