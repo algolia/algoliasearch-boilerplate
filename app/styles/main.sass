@@ -1,7 +1,11 @@
+@charset 'utf-8'
 
 /* VARIABLES ----------------------- */
+
 $primary-color: #ED5565 //Mandy
 $base-font-family: 'Helvetica Neue', Helvetica, sans-serif
+$sidebar-width: 23%
+$gutter-width: 3%
 
 
 /* GENERAL ------------------------- */
@@ -15,36 +19,44 @@ body
 body, h1, h2, h3, h4, h5, p, input
   font-family: $base-font-family
 
-header .container, section, main
-  width: 1000px
-  margin: 0 auto
 
-#left-column
-  width: 23%
-  float: left
+/* LAYOUT ------------------------- */
 
-#right-column
-  width: 74%
-  margin-left: 26%
-
-/* HEADER ------------------------- */
-header
+#header
   height: 80px
   position: fixed
   top: 0
   left: 0
   right: 0
   z-index: 1000
+
+.container
+  width: 1000px
+  margin: 0 auto
+  &.margin-fixed-header
+    margin-top: 100px
+
+#sidebar
+  width: $sidebar-width
+  float: left
+
+#results
+  float: right
+  width: 100% - $sidebar-width - $gutter-width
+
+
+/* HEADER ------------------------- */
+
+#header
   border-bottom: 2px solid #DDD
   background: white
-  #logo
-    float: left
-    width: 20%
-    max-width: 20%
-    margin-top: 9px
 
-main
-  margin-top: 100px
+#logo
+  float: left
+  width: 20%
+  max-width: 20%
+  margin-top: 9px
+
 
 /* AUTOCOMPLETE ------------------------- */
 
@@ -63,6 +75,7 @@ main
   &::-webkit-input-placeholder, &:-moz-placeholder, &:-ms-input-placeholder
     font-weight: 100
     color: #999
+
 .algolia-autocomplete
   width: 100%
   position: relative
@@ -127,6 +140,7 @@ main
           font-size: 12px
           color: #999
           margin: 0
+
 #autocomplete-icon
   position: relative
   &:before
@@ -145,7 +159,7 @@ main
 
 /* SEARCH INPUT ------------------------- */
 
-#section-input
+#searchbar
   height: 80px
   margin-top: 50px
 
@@ -181,7 +195,6 @@ main
   &.empty:before
     background-image: url(/images/empty_icon.png)
     cursor: pointer
-
 
 
 /* HITS ------------------------- */
@@ -227,7 +240,6 @@ main
     color: #999
 
 
-
 /* PAGINATION ------------------------- */
 
 #pagination
@@ -267,7 +279,6 @@ main
         background: none
 
 
-
 /* SORT-BY ------------------------- */
 
 #sort-by
@@ -300,7 +311,6 @@ main
     color: #000
 
 
-
 /* STATS ------------------------- */
 
 #stats
@@ -308,6 +318,7 @@ main
   .found-in
     font-size: 12px
     color: #999
+
 
 /* FACETS ------------------------- */
 
