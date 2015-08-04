@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
   <title>Instant Search Boilerplate</title>
@@ -14,51 +14,60 @@
   <!-- ##################################### -->
 
   <!-- Header -->
-  <header>
+  <header id="header">
     <div class="container">
       <!-- Logo -->
-      <a href=""><img id="logo" src="images/logo.png"/></a>
+      <a href=""><img id="logo" src="images/logo.png" alt="Logo"/></a>
 
       <!-- Autocompletion bar -->
-      <div id="autocomplete-input">
-        <input type="text" name="aq" id="aq" autocomplete="off" spellcheck="false" autocorrect="false" class="form-control string" placeholder="Search by name, brand, description..."/>
+      <section id="autocomplete-input">
+        <input type="text" name="aq" id="aq" autocomplete="off" spellcheck="false" class="form-control string" placeholder="Search by name, brand, description..."/>
         <div id="autocomplete-icon"></div>
-      </div>
+      </section> <!-- /Autocompletion bar -->
+
     </div>
   </header>
   <!-- /Header -->
 
-
-  <!-- Main -->
-  <main>
+  <!-- wrapper -->
+  <div class="container margin-fixed-header">
     <!-- Search input -->
-    <section id="section-input">
-      <input id="search-input" type="text" autocomplete="off" spellcheck="false" autocorrect="false" placeholder="Search by name, brand, description..."/>
+    <section id="searchbar">
+      <input id="search-input" type="text" autocomplete="off" spellcheck="false" placeholder="Search by name, brand, description..."/>
       <div id="search-input-icon"></div>
-    </section>
-    <!-- /Search input -->
+    </section> <!-- /Search input -->
 
-    <!-- Left Column -->
-    <div id="left-column">
-      <div id="facets"></div>
-    </div>
+    <!-- Sidebar -->
+    <aside id="sidebar">
+      <section id="facets"></section>
+    </aside> <!-- /Sidebar -->
 
-    <!-- Right Column -->
-    <div id="right-column">
-      <div id="sort-by">Sort by:
-        <select dir="rtl" id="sort-by-select">
-          <option value="" selected>Most relevant</option>
-          <option value="_price_asc">Lowest Price</option>
-          <option value="_price_desc">Highest Price</option>
-        </select>
-        <span class="caret"></span>
-      </div>
-      <div id="stats"></div>
-      <div id="hits"></div>
-      <div id="pagination"></div>
-    </div>
-  </main>
-  <!-- /Main -->
+    <!-- Results -->
+    <section id="results">
+
+      <header>
+        <!-- Sort -->
+        <section id="sort-by">Sort by:
+          <select dir="rtl" id="sort-by-select">
+            <option value="" selected>Most relevant</option>
+            <option value="_price_asc">Lowest Price</option>
+            <option value="_price_desc">Highest Price</option>
+          </select>
+          <span class="caret"></span>
+        </section> <!-- /Sort -->
+        <section id="stats"></section>
+      </header>
+
+      <!-- Main -->
+      <main id="hits"></main>
+
+      <!-- Pagination -->
+      <footer>
+        <section id="pagination"></section>
+      </footer>
+
+    </section> <!-- /Results -->
+  </div> <!-- /wrapper -->
 
 
   <!-- ######### Template Markups ########## -->
@@ -170,6 +179,6 @@
   <script src="//cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/jquery.ion.rangeslider/2.0.12/js/ion.rangeSlider.min.js"></script>
   <script src="scripts/main.js"></script>
-  
+
 </body>
 </html>

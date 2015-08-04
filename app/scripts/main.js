@@ -145,7 +145,7 @@ $(document).ready(function() {
   function renderFacets(content, state) {
     var facetsHtml = '';
     for (var facetIndex = 0; facetIndex < FACET_CONFIG.length; ++facetIndex) {
-      var facetParams = FACET_CONFIG[facetIndex]; 
+      var facetParams = FACET_CONFIG[facetIndex];
       var facetName = facetParams.name;
       var facetTitle = facetParams.title;
       var facetType = facetParams.type || '';
@@ -356,7 +356,6 @@ $(document).ready(function() {
   function sortByName (a, b) {
     return a.value.localeCompare(b.value);
   }
-
 
 
 });
