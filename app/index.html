@@ -10,6 +10,8 @@
 </head>
 <body>
 
+  <!-- ############ Page layout ############ -->
+  <!-- ##################################### -->
 
   <!-- Header -->
   <header>
@@ -59,7 +61,10 @@
   <!-- /Main -->
 
 
-  <!-- Hit template -->
+  <!-- ######### Template Markups ########## -->
+  <!-- ##################################### -->
+
+  <!-- [Result page] Hits template -->
   <script type="text/template" id="hit-template">
     {{#hits}}
     <div class="hit">
@@ -75,12 +80,12 @@
     {{/hits}}
   </script>
 
-  <!-- Stats template -->
+  <!-- [Result page] Stats template -->
   <script type="text/template" id="stats-template">
     {{ nbHits }} Result{{#nbHits_plural}}s{{/nbHits_plural}} <span class="found-in">Found in {{ processingTimeMS }}ms</span>
   </script>
 
-  <!-- Facet template -->
+  <!-- [Result page] Facet template -->
   <script type="text/template" id="facet-template">
     <div class="facet">
       <h5>{{ title }}</h5>
@@ -96,7 +101,7 @@
     </div>
   </script>
 
-  <!-- Slider template -->
+  <!-- [Result page] Slider template -->
   <script type="text/template" id="slider-template">
     <div class="facet">
       <h5>{{ title }}</h5>
@@ -104,7 +109,7 @@
     </div>
   </script>
 
-  <!-- No-Results template -->
+  <!-- [Result page] No-Results template -->
   <script type="text/template" id="no-results-template">
     <div id="no-results-message">
     <p>We didn't find any results for the search <em>"{{ query }}"</em>.</p>
@@ -120,7 +125,7 @@
     </div>
   </script>
 
-  <!-- Pagination template -->
+  <!-- [Result page] Pagination template -->
   <script type="text/template" id="pagination-template">
     <ul>
       <li {{^prev_page}}class="disabled"{{/prev_page}}><a href="#" {{#prev_page}}class="go-to-page" data-page="{{ prev_page }}"{{/prev_page}}>&#60;</a></li>
@@ -131,7 +136,8 @@
     </ul>
   </script>
 
-  <!-- Product Suggestion template -->
+
+  <!-- [Autocomplete] Product Suggestion template -->
   <script type="text/template" id="product-suggestion-template">
     <div class="product-suggestion">
       <div class="suggestion-image">
@@ -145,26 +151,25 @@
     </div>
   </script>
 
-  <!-- Manufacturer Suggestion template -->
+  <!-- [Autocomplete] Manufacturer Suggestion template -->
   <script type="text/template" id="manufacturer-suggestion-template">
     {{{ _highlightResult.name.value }}} <small class="text-muted">({{ count }})</small>
   </script>
 
-  <!-- Category Suggestion template -->
+  <!-- [Autocomplete] Category Suggestion template -->
   <script type="text/template" id="category-suggestion-template">
     {{{ _highlightResult.name.value }}} <small class="text-muted">({{ count }})</small>
   </script>
 
-  <!-- Javascript -->
-  <script src="//cdn.jsdelivr.net/jquery/2.1.4/jquery.min.js"></script>
+  <!-- ########## JS Inclusions ########### -->
+  <!-- ##################################### -->
+  <script src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
   <script src="//cdn.jsdelivr.net/algoliasearch.helper/2/algoliasearch.helper.min.js"></script>
   <script src="//cdn.jsdelivr.net/hogan.js/3.0.2/hogan.min.common.js"></script>
   <script src="//cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/jquery.ion.rangeslider/2.0.12/js/ion.rangeSlider.min.js"></script>
   <script src="scripts/main.js"></script>
-  <!-- /Javascript -->
-
-
+  
 </body>
 </html>
