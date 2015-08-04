@@ -1,6 +1,7 @@
 
 /* VARIABLES ----------------------- */
-$primary-color: #ED5565
+$primary-color: #ED5565 //Mandy
+$base-font-family: 'Helvetica Neue', Helvetica, sans-serif
 
 
 /* GENERAL ------------------------- */
@@ -12,7 +13,7 @@ body
   margin: 0 0 100px
 
 body, h1, h2, h3, h4, h5, p, input
-  font-family: 'Helvetica Neue', Helvetica, sans-serif
+  font-family: $base-font-family
 
 header .container, section, main
   width: 1000px
@@ -28,19 +29,19 @@ header .container, section, main
 
 /* HEADER ------------------------- */
 header
-  background: white
   height: 80px
-  border-bottom: 2px solid #DDD
   position: fixed
   top: 0
   left: 0
   right: 0
   z-index: 1000
+  border-bottom: 2px solid #DDD
+  background: white
   #logo
+    float: left
     width: 20%
     max-width: 20%
     margin-top: 9px
-    float: left
 
 main
   margin-top: 100px
@@ -72,11 +73,11 @@ main
     width: 100%
     margin-left: -15px
     padding: 0
-    background-color: #fff
     border: 1px solid rgba(0, 0, 0, 0.2)
+    background-color: #fff
     .aa-dataset-products, .aa-dataset-categories, .aa-dataset-manufacturers
-      width: 50%
       float: left
+      width: 50%
     &.aa-with-products.aa-without-manufacturers.aa-without-categories
       .aa-dataset-products
         width: 100%
@@ -88,11 +89,11 @@ main
       background: #f1f1f1
       border-bottom: 1px solid #ccc
       font-size: 14px
+      text-align: left
       font-weight: bold
-      text-align: left
     .aa-suggestion
-      text-align: left
       padding: 7px
+      text-align: left
       cursor: pointer
       &.aa-cursor
         background-color: #FDDED9
@@ -145,8 +146,8 @@ main
 /* SEARCH INPUT ------------------------- */
 
 #section-input
-  margin-top: 50px
   height: 80px
+  margin-top: 50px
 
 #search-input
   width: 74%
@@ -170,11 +171,11 @@ main
   position: relative
   &:before
     content: ""
+    width: 20px
+    height: 20px
     position: absolute
     bottom: 15px
     right: 0px
-    width: 20px
-    height: 20px
     background: url(/images/search_icon.png) no-repeat
     cursor: default
   &.empty:before
@@ -186,9 +187,9 @@ main
 /* HITS ------------------------- */
 
 #hits
-  border-top: 2px solid #EEE
   margin: 4px 0
   padding: 10px 0
+  border-top: 2px solid #EEE
 
 .hit
   padding: 8px 0
@@ -211,11 +212,11 @@ main
   vertical-align: top
   .hit-price
     float: right
-    color: $primary-color
-    font-size: 20px
     margin-left: 20px
     margin-top: 0
+    font-size: 20px
     font-weight: normal
+    color: $primary-color
   .hit-name
     margin-top: 0
     font-weight: normal
@@ -239,11 +240,11 @@ main
     display: inline
     font-size: 14px
   a
-    color: #000
-    text-decoration: none
+    padding: 8px 12px
     border: 1px solid #EEE
     border-right: none
-    padding: 8px 12px
+    text-decoration: none
+    color: #000
     &:hover
       background: #F5F5F5
   li
@@ -284,12 +285,12 @@ main
     -webkit-appearance: none
     -moz-appearance: none
   .caret
-    position: absolute
-    right: 0
-    top: 8px
     display: inline-block
     width: 0
     height: 0
+    position: absolute
+    right: 0
+    top: 8px
     margin-left: 2px
     vertical-align: middle
     border-top: 4px dashed
@@ -313,22 +314,22 @@ main
 .facet
   margin-bottom: 24px
   h5
+    padding: 0 0 6px
+    margin: 0 0 6px
     text-transform: uppercase
     border-bottom: 2px solid #EEE
-    margin: 0 0 6px
-    padding: 0 0 6px
   ul
     list-style-type: none
-    margin: 0
     padding: 0
+    margin: 0
   li
     margin-bottom: 3px
 
 .facet-link
-  color: #000
-  text-decoration: none
-  line-height: 1.2
   font-size: 13px
+  line-height: 1.2
+  text-decoration: none
+  color: #000
   &:hover
     color: $primary-color
 
