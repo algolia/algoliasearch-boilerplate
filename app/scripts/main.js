@@ -11,13 +11,14 @@ $(document).ready(function() {
   var INDEX_NAME = 'bestbuy';
   var HITS_PER_PAGE = 10;
   var MAX_VALUES_PER_FACET = 8;
+  var FACETS_LABELS = { type: 'Type', shipping: 'Shipping', customerReviewCount: '# Reviews', type: 'Type'};
   var FACET_CONFIG = [
-  { name: 'type', title: 'Type', disjunctive: false, sortFunction: sortByCountDesc },
-  { name: 'shipping', title: 'Shipping', disjunctive: false, sortFunction: sortByCountDesc },
-  { name: 'customerReviewCount', title: '# Reviews', disjunctive: true, type: 'slider' },
-  { name: 'category', title: 'Category', disjunctive: true, sortFunction: sortByCountDesc, topListIfRefined: true },
-  { name: 'salePrice_range', title: 'Price range', disjunctive: true, sortFunction: sortByName },
-  { name: 'manufacturer', title: 'Manufacturer', disjunctive: true, sortFunction: sortByName, topListIfRefined: true }
+    { name: 'type', title: 'Type', disjunctive: false, sortFunction: sortByCountDesc },
+    { name: 'shipping', title: 'Shipping', disjunctive: false, sortFunction: sortByCountDesc },
+    { name: 'customerReviewCount', title: '# Reviews', disjunctive: true, type: 'slider' },
+    { name: 'category', title: 'Category', disjunctive: true, sortFunction: sortByCountDesc, topListIfRefined: true },
+    { name: 'salePrice_range', title: 'Price range', disjunctive: true, sortFunction: sortByName },
+    { name: 'manufacturer', title: 'Manufacturer', disjunctive: true, sortFunction: sortByName, topListIfRefined: true }
   ];
 
   // Client + Helper initialization
@@ -36,17 +37,19 @@ $(document).ready(function() {
   var $hits = $('#hits');
   var $stats = $('#stats');
   var $facets = $('#facets');
+  var $main = $('main');
   var $pagination = $('#pagination');
 
   // Hogan templates binding
-  var hitTemplate        = Hogan.compile($('#hit-template').text());
-  var statsTemplate      = Hogan.compile($('#stats-template').text());
-  var facetTemplate      = Hogan.compile($('#facet-template').text());
-  var sliderTemplate     = Hogan.compile($('#slider-template').text());
+  var hitTemplate = Hogan.compile($('#hit-template').text());
+  var statsTemplate = Hogan.compile($('#stats-template').text());
+  var facetTemplate = Hogan.compile($('#facet-template').text());
+  var sliderTemplate = Hogan.compile($('#slider-template').text());
+  var noResultsTemplate = Hogan.compile($('#no-results-template').text());
   var paginationTemplate = Hogan.compile($('#pagination-template').text());
-  var productSuggestionTemplate      = Hogan.compile($('#product-suggestion-template').text());
+  var productSuggestionTemplate = Hogan.compile($('#product-suggestion-template').text());
   var manufacturerSuggestionTemplate = Hogan.compile($('#manufacturer-suggestion-template').text());
-  var categorySuggestionTemplate     = Hogan.compile($('#category-suggestion-template').text());
+  var categorySuggestionTemplate = Hogan.compile($('#category-suggestion-template').text());
 
 
 
@@ -115,6 +118,7 @@ $(document).ready(function() {
     renderFacets(content, state);
     bindSearchObjects(state);
     renderPagination(content);
+    handleNoResults(content);
   });
 
   // Initial search
@@ -142,9 +146,9 @@ $(document).ready(function() {
     var facetsHtml = '';
     for (var facetIndex = 0; facetIndex < FACET_CONFIG.length; ++facetIndex) {
       var facetParams = FACET_CONFIG[facetIndex]; 
-      var facetName   = facetParams.name;
-      var facetTitle  = facetParams.title;
-      var facetType   = facetParams.type || '';
+      var facetName = facetParams.name;
+      var facetTitle = facetParams.title;
+      var facetType = facetParams.type || '';
       var facetResult = content.getFacetByName(facetName);
       if (!facetResult) continue;
       var facetContent = {};
@@ -158,9 +162,9 @@ $(document).ready(function() {
         facetContent.min = facetResult.stats.min;
         facetContent.max = facetResult.stats.max;
         var from = state.getNumericRefinement(facetName, '>=') || facetContent.min;
-        var to   = state.getNumericRefinement(facetName, '<=') || facetContent.max;
+        var to = state.getNumericRefinement(facetName, '<=') || facetContent.max;
         facetContent.from = Math.min(facetContent.max, Math.max(facetContent.min, from));
-        facetContent.to   = Math.min(facetContent.max, Math.max(facetContent.min, to));
+        facetContent.to = Math.min(facetContent.max, Math.max(facetContent.min, to));
         facetsHtml +=  sliderTemplate.render(facetContent);
       }
 
@@ -199,10 +203,10 @@ $(document).ready(function() {
       var sliderOptions = {
         type: "double",
         grid: true,
-        min:  slider.data('min'),
-        max:  slider.data('max'),
+        min: slider.data('min'),
+        max: slider.data('max'),
         from: slider.data('from'),
-        to:   slider.data('to'),
+        to: slider.data('to'),
         prettify: function (num) {
           return '#' + num;
         },
@@ -243,6 +247,56 @@ $(document).ready(function() {
     };
     $pagination.html(paginationTemplate.render(pagination));
   }
+
+
+
+  // NO RESULTS
+  // ==========
+
+   function handleNoResults(content) {
+     if (content.nbHits > 0) {
+       $main.removeClass('no-results');
+       return ;
+     }
+     $main.addClass('no-results');
+
+     var filters = [];
+     var i;
+     var j;
+
+     for (i in algoliaHelper.state.facetsRefinements) {
+       filters.push({
+         class: 'toggle-refine',
+         facet: i,
+         facet_value: algoliaHelper.state.facetsRefinements[i],
+         label: $.map(FACET_CONFIG, function (e) { if (e.name === i ) return e.title; })[0] + ': ',
+         label_value: algoliaHelper.state.facetsRefinements[i]
+       });
+     }
+     for (i in algoliaHelper.state.disjunctiveFacetsRefinements) {
+       for (j in algoliaHelper.state.disjunctiveFacetsRefinements[i]) {
+         filters.push({
+           class: 'toggle-refine',
+           facet: i,
+           facet_value: algoliaHelper.state.disjunctiveFacetsRefinements[i][j],
+           label: $.map(FACET_CONFIG, function (e) { if (e.name === i ) return e.title; })[0] + ': ',
+           label_value: algoliaHelper.state.disjunctiveFacetsRefinements[i][j]
+         });
+       }
+     }
+     for (i in algoliaHelper.state.numericRefinements) {
+       for (j in algoliaHelper.state.numericRefinements[i]) {
+         filters.push({
+           class: 'remove-numeric-refine',
+           facet: i,
+           facet_value: j,
+           label: $.map(FACET_CONFIG, function (e) { if (e.name === i ) return e.title; })[0] + ' ',
+           label_value: j + ' ' + algoliaHelper.state.numericRefinements[i][j]
+         });
+       }
+     }
+     $hits.html(noResultsTemplate.render({query: content.query, filters: filters}));
+   }
 
 
 
@@ -304,5 +358,5 @@ $(document).ready(function() {
   }
 
 
-});
 
+});
