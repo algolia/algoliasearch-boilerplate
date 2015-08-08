@@ -13,7 +13,6 @@
   <!-- ############ Page layout ############ -->
   <!-- ##################################### -->
 
-
   <header id="header">
     <div class="container">
       <!-- Logo -->
@@ -45,10 +44,10 @@
       <header class="clearfix">
         <!-- Stats -->
         <div id="stats"></div>
-        <!-- Display Teplate-->
-        <div id="results-template">
-          <a href="#" class="display-list active" data-template="list">List</a>
-          <a href="#" class="display-grid" data-template="grid">Grid</a>
+        <!-- Display layout -->
+        <div id="results-layout-choice">
+          <a href="#" class="item list-layout" data-target-layout="list">List</a>
+          <a href="#" class="item grid-layout" data-target-layout="grid">Grid</a>
         </div>
         <!-- Sort -->
         <div id="sort-by">Sort by:
@@ -58,7 +57,7 @@
             <option value="_price_desc">Highest Price</option>
           </select>
           <span class="caret"></span>
-        </div> <!-- /Sort -->
+        </div>
       </header>
       <!-- Main -->
       <main id="hits" class="clearfix"></main>
@@ -74,8 +73,8 @@
   <!-- ######### Template Markups ########## -->
   <!-- ##################################### -->
 
-  <!-- [Result page] Hits template LIST -->
-  <script type="text/template" id="hit-template-list">
+  <!-- [Result page] Hits LIST layout -->
+  <script type="text/template" id="hit-template-list-layout">
     {{#hits}}
     <div class="hit-wrapper template-list">
       <div class="hit">
@@ -92,8 +91,8 @@
     {{/hits}}
   </script>
 
-  <!-- [Result page] Hits template GRID -->
-  <script type="text/template" id="hit-template-grid">
+  <!-- [Result page] Hits GRID layout -->
+  <script type="text/template" id="hit-template-grid-layout">
     {{#hits}}
     <div class="hit-wrapper template-grid">
       <div class="hit">

@@ -270,7 +270,7 @@ body, h1, h2, h3, h4, h5, p, input
 #sort-by
   position: relative
   float: right
-  margin-right: 16px
+  margin-right: 40px
   line-height: 38px
   font-weight: 300
   color: #999
@@ -310,12 +310,12 @@ body, h1, h2, h3, h4, h5, p, input
 
 
 /* RESULTS TEMPLATE SWITCH ------------ */
-#results-template
+#results-layout-choice
   float: right
   display: inline-block
   border: solid 1px #ccc
   border-radius: 3px
-  a
+  .item
     display: block
     float: left
     padding: 6px 8px
@@ -323,18 +323,18 @@ body, h1, h2, h3, h4, h5, p, input
     background-repeat: no-repeat
     width: 14px
     text-indent: -9000px
-    &.display-list
+    &.list-layout
       background-position: -18px 8px
       background-color: #eee
       border-right: solid 1px #ccc
       &.active
-        background-position: -18px -14px
+        background-position: -18px -15px
         background-color: white
-    &.display-grid
+    &.grid-layout
       background-position: 8px 8px
       background-color: #eee
       &.active
-        background-position: 8px -14px
+        background-position: 8px -15px
         background-color: white
 
 /* PAGINATION ------------------------- */

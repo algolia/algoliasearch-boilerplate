@@ -1,7 +1,5 @@
 $(document).ready(function() {
 
-
-
   // INITIALIZATION
   // ==============
 
@@ -9,9 +7,8 @@ $(document).ready(function() {
   var APPLICATION_ID = 'latency';
   var SEARCH_ONLY_API_KEY = '6be0576ff61c053d5f9a3225e2a90f76';
   var INDEX_NAME = 'bestbuy';
-  var HITS_PER_PAGE = 12;
+
   var MAX_VALUES_PER_FACET = 8;
-  var FACETS_LABELS = { type: 'Type', shipping: 'Shipping', customerReviewCount: '# Reviews', type: 'Type'};
   var FACET_CONFIG = [
     { name: 'type', title: 'Type', disjunctive: false, sortFunction: sortByCountDesc },
     { name: 'shipping', title: 'Shipping', disjunctive: false, sortFunction: sortByCountDesc },
@@ -24,7 +21,6 @@ $(document).ready(function() {
   // Client + Helper initialization
   var algolia = algoliasearch(APPLICATION_ID, SEARCH_ONLY_API_KEY);
   var params = {
-    hitsPerPage: HITS_PER_PAGE,
     maxValuesPerFacet: MAX_VALUES_PER_FACET,
     facets: $.map(FACET_CONFIG, function(facet) { return !facet.disjunctive ? facet.name : null; }),
     disjunctiveFacets: $.map(FACET_CONFIG, function(facet) { return facet.disjunctive ? facet.name : null; })
@@ -39,12 +35,9 @@ $(document).ready(function() {
   var $facets = $('#facets');
   var $main = $('main');
   var $pagination = $('#pagination');
-  var $resultsTemplate = $('#resultsTemplate');
+  var $resultsLayoutChoice = $('#results-layout-choice');
 
   // Hogan templates binding
-  var hitTemplateList = Hogan.compile($('#hit-template-list').text());
-  var hitTemplateGrid = Hogan.compile($('#hit-template-grid').text());
-  hitTemplate = hitTemplateList; //default results template
   var statsTemplate = Hogan.compile($('#stats-template').text());
   var facetTemplate = Hogan.compile($('#facet-template').text());
   var sliderTemplate = Hogan.compile($('#slider-template').text());
@@ -54,6 +47,14 @@ $(document).ready(function() {
   var manufacturerSuggestionTemplate = Hogan.compile($('#manufacturer-suggestion-template').text());
   var categorySuggestionTemplate = Hogan.compile($('#category-suggestion-template').text());
   var resultsTemplateSelectionTemplate = Hogan.compile($('#category-suggestion-template').text());
+
+  // Results Layout
+  var DEFAULT_RESULTS_LAYOUT_NAME = 'list';
+  var RESULTS_LAYOUT_CONFIG = {
+    "list": { hitsPerPage: 12, hitTemplate: Hogan.compile($('#hit-template-list-layout').text()) },
+    "grid": { hitsPerPage: 20, hitTemplate: Hogan.compile($('#hit-template-grid-layout').text()) }
+  };
+  setActiveResultsLayout(DEFAULT_RESULTS_LAYOUT_NAME);
 
 
 
@@ -143,6 +144,7 @@ $(document).ready(function() {
   }
 
   function renderHits(content) {
+    var hitTemplate = RESULTS_LAYOUT_CONFIG[activeResultsLayoutName].hitTemplate;
     $hits.html(hitTemplate.render(content));
   }
 
@@ -311,36 +313,29 @@ $(document).ready(function() {
     e.preventDefault();
     algoliaHelper.toggleRefine($(this).data('facet'), $(this).data('value')).search();
   });
+
   $(document).on('click', '.go-to-page', function(e) {
     e.preventDefault();
     $('html, body').animate({scrollTop:0}, '500', 'swing');
     algoliaHelper.setCurrentPage(+$(this).data('page') - 1).search();
   });
+
   $(document).on('change', '#sort-by-select',function(e) {
     e.preventDefault();
     algoliaHelper.setIndex(INDEX_NAME + $(this).val()).search();
   });
+
   $(document).on('click', '#search-input-icon',function(e) {
     e.preventDefault();
     $inputField.val('').keyup().focus();
   });
-  $(document).on('click', '#results-template a',function(e) {
+
+  $(document).on('click', '#results-layout-choice a', function(e) {
     e.preventDefault();
-    $('#results-template a').removeClass('active');
-    $(this).addClass('active');
-    var template = $(this).data('template');
-    var templates = {
-      "list": hitTemplateList,
-      "grid": hitTemplateGrid
-    };
-    var hits_per_page = {
-      "list": HITS_PER_PAGE,
-      "grid": 20
-    };
-    //fixme HITS_PER_PAGE
-    //
-    hitTemplate=templates[template];
-    algoliaHelper.setQueryParameter('hitsPerPage', hits_per_page[template]).search();
+
+    var layoutName = $(this).data('target-layout');
+    setActiveResultsLayout(layoutName);
+    algoliaHelper.search();
   });
 
 
@@ -353,9 +348,23 @@ $(document).ready(function() {
   // HELPER METHODS
   // ==============
 
+  function setActiveResultsLayout(layoutName) {
+    if (RESULTS_LAYOUT_CONFIG.hasOwnProperty(layoutName) === false) {
+      console.log("Error: the results layout called " + layoutName + " doesn't exist");
+      return;
+    }
+
+    $('.item', $resultsLayoutChoice).removeClass('active');
+    $('.item.' + layoutName + '-layout', $resultsLayoutChoice).addClass('active');
+    activeResultsLayoutName = layoutName;
+    
+    algoliaHelper.setQueryParameter('hitsPerPage', RESULTS_LAYOUT_CONFIG[layoutName].hitsPerPage);
+  }
+
   function toggleIconEmptyInput(isEmpty) {
     $('#search-input-icon').toggleClass('empty', !isEmpty);
   }
+
   function numberWithDelimiter(number, delimiter) {
     number = number + '';
     delimiter = delimiter || ',';
@@ -363,6 +372,7 @@ $(document).ready(function() {
     split[0] = split[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + delimiter);
     return split.join('.');
   }
+
   function sortByRefined (sortFunction) {
     return function (a, b) {
       if (a.refined !== b.refined) {
@@ -372,9 +382,11 @@ $(document).ready(function() {
       return sortFunction(a, b);
     };
   }
+
   function sortByCountDesc (a, b) {
     return b.count - a.count;
   }
+
   function sortByName (a, b) {
     return a.value.localeCompare(b.value);
   }
