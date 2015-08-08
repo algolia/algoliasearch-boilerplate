@@ -47,7 +47,7 @@ gulp.task('views', function() {
 
 // images
 gulp.task('images', function() {
-  gulp.src('app/images/**/*.*')
+  gulp.src(['app/images/**/*.png','app/images/**/*.svg','app/images/**/*.jpg','app/images/**/*.gif'])
     .pipe(gulp.dest('dist/images'))
 });
 
@@ -100,6 +100,11 @@ gulp.task('watch', ['lint'], function() {
   // Watch our template files
   gulp.watch(['app/**/*.html'], [
     'views'
+  ]);
+
+  // Watch our images files
+  gulp.watch(['app/images/**/*.png','app/images/**/*.svg','app/images/**/*.jpg','app/images/**/*.gif'], [
+    'images'
   ]);
 
   // refresh if changed

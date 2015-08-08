@@ -7,6 +7,7 @@ $base-font-family: 'Helvetica Neue', Helvetica, sans-serif
 $sidebar-width: 23%
 $gutter-width: 3%
 
+//fixme add a reset
 
 /* GENERAL ------------------------- */
 
@@ -225,11 +226,9 @@ body, h1, h2, h3, h4, h5, p, input
   &.template-list // specific to list
     padding: 8px 0
     border-bottom: 1px solid #EEE
-    font-size: 0
     .hit-content
       display: inline-block
       width: 83%
-      margin-left: 1%
       vertical-align: top
     .hit-image
       display: inline-block
@@ -243,27 +242,46 @@ body, h1, h2, h3, h4, h5, p, input
       margin-top: 0
 
   &.template-grid //specific to grid
-    box-sizing: border-box
     float: left
     width: 33.33%
-    padding: 5px
-    border: solid 1px #ccc
-    height: 240px
+    height: 250px
+    box-sizing: border-box
+    background-color: white
+    box-shadow: 0 0 0 1px #ccc
     .hit
       position: relative
+      width: 100%
+    .text-center-helper
+      display: table
+      width: 100%
+      height: 70px
     .hit-name
+      display: table-cell
+      padding: 0 20px
       text-align: center
       font-size: 15px
+      vertical-align: middle
     .hit-image
+      display: block
+      height: 150px
+      margin: 12px 0
       text-align: center
+      .img-center-helper
+        display: inline-block
+        height: 100%
+        vertical-align: middle
       img
+        vertical-align: middle
         max-width: 100%
-        max-height: 200px
+        max-height: 150px
     .hit-price
       position: absolute
-      top: 5px
-      right: 5px
-
+      top: 0
+      right: 8px
+      margin: 0
+      font-size: 16px
+      background: white
+      color: $primary-color
 
 /* SORT-BY ------------------------- */
 
@@ -328,13 +346,13 @@ body, h1, h2, h3, h4, h5, p, input
       background-color: #eee
       border-right: solid 1px #ccc
       &.active
-        background-position: -18px -14px
+        background-position: -18px -18px
         background-color: white
     &.display-grid
       background-position: 8px 8px
       background-color: #eee
       &.active
-        background-position: 8px -14px
+        background-position: 8px -18px
         background-color: white
 
 /* PAGINATION ------------------------- */
@@ -342,13 +360,15 @@ body, h1, h2, h3, h4, h5, p, input
 #pagination
   margin: 60px 0
   ul
-    list-style-type: none
+    display: block
+    padding: 0
+    list-style: none
     text-align: center
-    font-size: 0
   li
-    display: inline
+    display: inline-block
     font-size: 14px
   a
+    display: block
     padding: 8px 12px
     border: 1px solid #EEE
     border-right: none
@@ -376,7 +396,7 @@ body, h1, h2, h3, h4, h5, p, input
         background: none
 
 
-/* No-result ------------------------- */
+/* NO RESULTS ------------------------- */
 
 .no-results #pagination, .no-results #sort-by, .no-results #stats, .no-results #facets
   display: none
@@ -389,7 +409,8 @@ body, h1, h2, h3, h4, h5, p, input
 
 #no-results-message
   ul
-    list-style-type: none
+    padding: 0
+    list-style: none
   li
     font-size: 12px
     position: relative

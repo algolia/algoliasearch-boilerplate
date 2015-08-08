@@ -11,7 +11,6 @@ $(document).ready(function() {
   var INDEX_NAME = 'bestbuy';
   var HITS_PER_PAGE = 12;
   var MAX_VALUES_PER_FACET = 8;
-  var FACETS_LABELS = { type: 'Type', shipping: 'Shipping', customerReviewCount: '# Reviews', type: 'Type'};
   var FACET_CONFIG = [
     { name: 'type', title: 'Type', disjunctive: false, sortFunction: sortByCountDesc },
     { name: 'shipping', title: 'Shipping', disjunctive: false, sortFunction: sortByCountDesc },
@@ -257,50 +256,57 @@ $(document).ready(function() {
   // NO RESULTS
   // ==========
 
-   function handleNoResults(content) {
-     if (content.nbHits > 0) {
-       $main.removeClass('no-results');
-       return ;
-     }
-     $main.addClass('no-results');
+  function remapFacetName(facet,config) {
+    var name = $.map(config, function (e) {
+      if (e.name === facet ) return e.title;
+    });
+    return name[0] + ': ';
+  }
 
-     var filters = [];
-     var i;
-     var j;
+  function handleNoResults(content) {
 
-     for (i in algoliaHelper.state.facetsRefinements) {
-       filters.push({
-         class: 'toggle-refine',
-         facet: i,
-         facet_value: algoliaHelper.state.facetsRefinements[i],
-         label: $.map(FACET_CONFIG, function (e) { if (e.name === i ) return e.title; })[0] + ': ',
-         label_value: algoliaHelper.state.facetsRefinements[i]
-       });
-     }
-     for (i in algoliaHelper.state.disjunctiveFacetsRefinements) {
-       for (j in algoliaHelper.state.disjunctiveFacetsRefinements[i]) {
-         filters.push({
-           class: 'toggle-refine',
-           facet: i,
-           facet_value: algoliaHelper.state.disjunctiveFacetsRefinements[i][j],
-           label: $.map(FACET_CONFIG, function (e) { if (e.name === i ) return e.title; })[0] + ': ',
-           label_value: algoliaHelper.state.disjunctiveFacetsRefinements[i][j]
-         });
-       }
-     }
-     for (i in algoliaHelper.state.numericRefinements) {
-       for (j in algoliaHelper.state.numericRefinements[i]) {
-         filters.push({
-           class: 'remove-numeric-refine',
-           facet: i,
-           facet_value: j,
-           label: $.map(FACET_CONFIG, function (e) { if (e.name === i ) return e.title; })[0] + ' ',
-           label_value: j + ' ' + algoliaHelper.state.numericRefinements[i][j]
-         });
-       }
-     }
-     $hits.html(noResultsTemplate.render({query: content.query, filters: filters}));
-   }
+    if (content.nbHits > 0) {
+      $main.removeClass('no-results');
+      return;
+    }
+
+    $main.addClass('no-results');
+
+    var i, j, filters = [];
+
+    for (i in algoliaHelper.state.facetsRefinements) {
+      filters.push({
+        class: 'toggle-refine',
+        facet: i,
+        facet_value: algoliaHelper.state.facetsRefinements[i],
+        label: remapFacetName(i,FACET_CONFIG),
+        label_value: algoliaHelper.state.facetsRefinements[i]
+      });
+    }
+    for (i in algoliaHelper.state.disjunctiveFacetsRefinements) {
+      for (j in algoliaHelper.state.disjunctiveFacetsRefinements[i]) {
+        filters.push({
+          class: 'toggle-refine',
+          facet: i,
+          facet_value: algoliaHelper.state.disjunctiveFacetsRefinements[i][j],
+          label: remapFacetName(i,FACET_CONFIG),
+          label_value: algoliaHelper.state.disjunctiveFacetsRefinements[i][j]
+        });
+      }
+    }
+    for (i in algoliaHelper.state.numericRefinements) {
+      for (j in algoliaHelper.state.numericRefinements[i]) {
+        filters.push({
+          class: 'remove-numeric-refine',
+          facet: i,
+          facet_value: j,
+          label: remapFacetName(i,FACET_CONFIG),
+          label_value: j + ' ' + algoliaHelper.state.numericRefinements[i][j]
+        });
+      }
+    }
+    $hits.html(noResultsTemplate.render({query: content.query, filters: filters}));
+  }
 
 
 
@@ -335,7 +341,7 @@ $(document).ready(function() {
     };
     var hits_per_page = {
       "list": HITS_PER_PAGE,
-      "grid": 20
+      "grid": 21
     };
     //fixme HITS_PER_PAGE
     //
