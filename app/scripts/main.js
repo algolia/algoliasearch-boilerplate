@@ -7,6 +7,7 @@ $(document).ready(function() {
   var APPLICATION_ID = 'latency';
   var SEARCH_ONLY_API_KEY = '6be0576ff61c053d5f9a3225e2a90f76';
   var INDEX_NAME = 'bestbuy';
+  var DEFAULT_RESULTS_LAYOUT_NAME = 'list';
 
   var MAX_VALUES_PER_FACET = 8;
   var FACET_CONFIG = [
@@ -50,7 +51,6 @@ $(document).ready(function() {
   var resultsTemplateSelectionTemplate = Hogan.compile($('#category-suggestion-template').text());
 
   // Results Layout
-  var DEFAULT_RESULTS_LAYOUT_NAME = 'list';
   var RESULTS_LAYOUT_CONFIG = {
     "list": { hitsPerPage: 12, hitTemplate: Hogan.compile($('#hit-template-list-layout').text()) },
     "grid": { hitsPerPage: 21, hitTemplate: Hogan.compile($('#hit-template-grid-layout').text()) }
@@ -355,7 +355,7 @@ $(document).ready(function() {
 
   $(document).on('click', '#no-results-message .clear-all-btn', function(e) {
     e.preventDefault();
-    
+
     $inputField.val('');
     algoliaHelper.clearRefinements();
     algoliaHelper.setQuery('');
