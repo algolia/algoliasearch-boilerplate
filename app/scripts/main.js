@@ -36,6 +36,7 @@ $(document).ready(function() {
   var $main = $('main');
   var $pagination = $('#pagination');
   var $resultsLayoutChoice = $('#results-layout-choice');
+  var $noResultsMessage = $('#no-results-message');
 
   // Hogan templates binding
   var statsTemplate = Hogan.compile($('#stats-template').text());
@@ -233,25 +234,32 @@ $(document).ready(function() {
   }
 
   function renderPagination(content) {
-    var pages = [];
-    if (content.page > 3) {
-      pages.push({ current: false, number: 1 });
-      pages.push({ current: false, number: '...', disabled: true });
+    var renderedHtml = '';
+
+    if (content.nbHits > 0) {
+      var pages = [];
+      if (content.page > 3) {
+        pages.push({ current: false, number: 1 });
+        pages.push({ current: false, number: '...', disabled: true });
+      }
+      for (var p = content.page - 3; p < content.page + 3; ++p) {
+        if (p < 0 || p >= content.nbPages) continue;
+        pages.push({ current: content.page === p, number: p + 1 });
+      }
+      if (content.page + 3 < content.nbPages) {
+        pages.push({ current: false, number: '...', disabled: true });
+        pages.push({ current: false, number: content.nbPages });
+      }
+      var pagination = {
+        pages: pages,
+        prev_page: content.page > 0 ? content.page : false,
+        next_page: content.page + 1 < content.nbPages ? content.page + 2 : false
+      };
+
+      renderedHtml = paginationTemplate.render(pagination);
     }
-    for (var p = content.page - 3; p < content.page + 3; ++p) {
-      if (p < 0 || p >= content.nbPages) continue;
-      pages.push({ current: content.page === p, number: p + 1 });
-    }
-    if (content.page + 3 < content.nbPages) {
-      pages.push({ current: false, number: '...', disabled: true });
-      pages.push({ current: false, number: content.nbPages });
-    }
-    var pagination = {
-      pages: pages,
-      prev_page: content.page > 0 ? content.page : false,
-      next_page: content.page + 1 < content.nbPages ? content.page + 2 : false
-    };
-    $pagination.html(paginationTemplate.render(pagination));
+
+    $pagination.html(renderedHtml);
   }
 
 
@@ -327,12 +335,12 @@ $(document).ready(function() {
     algoliaHelper.setCurrentPage(+$(this).data('page') - 1).search();
   });
 
-  $(document).on('change', '#sort-by-select',function(e) {
+  $(document).on('change', '#sort-by-select', function(e) {
     e.preventDefault();
     algoliaHelper.setIndex(INDEX_NAME + $(this).val()).search();
   });
 
-  $(document).on('click', '#search-input-icon',function(e) {
+  $(document).on('click', '#search-input-icon', function(e) {
     e.preventDefault();
     $inputField.val('').keyup().focus();
   });
@@ -342,6 +350,15 @@ $(document).ready(function() {
 
     var layoutName = $(this).data('target-layout');
     setActiveResultsLayout(layoutName);
+    algoliaHelper.search();
+  });
+
+  $(document).on('click', '#no-results-message .clear-all-btn', function(e) {
+    e.preventDefault();
+    
+    $inputField.val('');
+    algoliaHelper.clearRefinements();
+    algoliaHelper.setQuery('');
     algoliaHelper.search();
   });
 
