@@ -97,11 +97,14 @@
     <div class="hit-wrapper template-grid">
       <div class="hit">
         <div class="hit-image">
+          <div class="img-center-helper"></div>
           <img src="{{ image }}" alt="{{ name }}">
         </div>
+        <div class="hit-price">${{ salePrice }}</div>
         <div class="hit-content">
-          <h3 class="hit-price">${{ salePrice }}</h3>
-          <h2 class="hit-name">{{{ _highlightResult.name.value }}}</h2>
+          <div class="text-center-helper">
+            <h2 class="hit-name">{{{ _highlightResult.name.value }}}</h2>
+          </div>
         </div>
       </div>
     </div>
@@ -140,7 +143,7 @@
   <!-- [Result page] No-Results template -->
   <script type="text/template" id="no-results-template">
     <div id="no-results-message">
-      <p>We didn't find any results for the search <em>"{{ query }}"</em>.</p>
+      <p>No results for the search <em>"{{ query }}"</em>.</p>
       <ul>
         {{#filters}}
           <li class="{{ class }}" data-facet="{{ facet }}" data-value="{{ facet_value }}">
@@ -157,15 +160,13 @@
     <ul>
       <li {{^prev_page}}class="disabled"{{/prev_page}}>
         <a href="#" {{#prev_page}}class="go-to-page" data-page="{{ prev_page }}"{{/prev_page}}>&#60;</a>
-      </li>
-
+      </li><!--
       {{#pages}}
-      <li class="{{#current}}active{{/current}} {{#disabled}}disabled{{/disabled}}">
+      --><li class="{{#current}}active{{/current}} {{#disabled}}disabled{{/disabled}}">
         <a href="#" {{^disabled}} class="go-to-page" data-page="{{ number }}" {{/disabled}}>{{ number }}</a>
-      </li>
+      </li><!--
       {{/pages}}
-
-      <li {{^next_page}}class="disabled"{{/next_page}}>
+      --><li {{^next_page}}class="disabled"{{/next_page}}>
         <a href="#" {{#next_page}}class="go-to-page" data-page="{{ next_page }}"{{/next_page}}>&#62;</a>
       </li>
     </ul>
