@@ -13,29 +13,27 @@
   <!-- ############ Page layout ############ -->
   <!-- ##################################### -->
 
-  <!-- Header -->
+
   <header id="header">
     <div class="container">
       <!-- Logo -->
       <a href=""><img id="logo" src="images/logo.png" alt="Logo"/></a>
-
       <!-- Autocompletion bar -->
       <section id="autocomplete-input">
         <input type="text" name="aq" id="aq" autocomplete="off" spellcheck="false" class="form-control string" placeholder="Search by name, brand, description..."/>
         <div id="autocomplete-icon"></div>
       </section> <!-- /Autocompletion bar -->
-
-    </div>
+    </div><!-- /Container  -->
   </header>
-  <!-- /Header -->
 
   <!-- wrapper -->
   <div class="container margin-fixed-header">
-    <!-- Search input -->
+
+    <!-- Searchbar -->
     <section id="searchbar">
       <input id="search-input" type="text" autocomplete="off" spellcheck="false" placeholder="Search by name, brand, description..."/>
       <div id="search-input-icon"></div>
-    </section> <!-- /Search input -->
+    </section> <!-- /Searchbar -->
 
     <!-- Sidebar -->
     <aside id="sidebar">
@@ -44,46 +42,68 @@
 
     <!-- Results -->
     <section id="results">
-
-      <header>
+      <header class="clearfix">
+        <!-- Stats -->
+        <div id="stats"></div>
+        <!-- Display Teplate-->
+        <div id="results-template">
+          <a href="#" class="display-list active" data-template="list">List</a>
+          <a href="#" class="display-grid" data-template="grid">Grid</a>
+        </div>
         <!-- Sort -->
-        <section id="sort-by">Sort by:
+        <div id="sort-by">Sort by:
           <select dir="rtl" id="sort-by-select">
             <option value="" selected>Most relevant</option>
             <option value="_price_asc">Lowest Price</option>
             <option value="_price_desc">Highest Price</option>
           </select>
           <span class="caret"></span>
-        </section> <!-- /Sort -->
-        <section id="stats"></section>
+        </div> <!-- /Sort -->
       </header>
-
       <!-- Main -->
-      <main id="hits"></main>
-
+      <main id="hits" class="clearfix"></main>
       <!-- Pagination -->
-      <footer>
-        <section id="pagination"></section>
+      <footer class="clearfix">
+        <div id="pagination"></div>
       </footer>
-
     </section> <!-- /Results -->
+
   </div> <!-- /wrapper -->
 
 
   <!-- ######### Template Markups ########## -->
   <!-- ##################################### -->
 
-  <!-- [Result page] Hits template -->
-  <script type="text/template" id="hit-template">
+  <!-- [Result page] Hits template LIST -->
+  <script type="text/template" id="hit-template-list">
     {{#hits}}
-    <div class="hit">
-      <div class="hit-image">
-        <img src="{{ image }}" alt="{{ name }}">
+    <div class="hit-wrapper template-list">
+      <div class="hit">
+        <div class="hit-image">
+          <img src="{{ image }}" alt="{{ name }}">
+        </div>
+        <div class="hit-content">
+          <h3 class="hit-price">${{ salePrice }}</h3>
+          <h2 class="hit-name">{{{ _highlightResult.name.value }}}</h2>
+          <p class="hit-description">{{{ _highlightResult.shortDescription.value }}}</p>
+        </div>
       </div>
-      <div class="hit-content">
-        <h3 class="hit-price">${{ salePrice }}</h3>
-        <h2 class="hit-name">{{{ _highlightResult.name.value }}}</h2>
-        <p class="hit-description">{{{ _highlightResult.shortDescription.value }}}</p>
+    </div>
+    {{/hits}}
+  </script>
+
+  <!-- [Result page] Hits template GRID -->
+  <script type="text/template" id="hit-template-grid">
+    {{#hits}}
+    <div class="hit-wrapper template-grid">
+      <div class="hit">
+        <div class="hit-image">
+          <img src="{{ image }}" alt="{{ name }}">
+        </div>
+        <div class="hit-content">
+          <h3 class="hit-price">${{ salePrice }}</h3>
+          <h2 class="hit-name">{{{ _highlightResult.name.value }}}</h2>
+        </div>
       </div>
     </div>
     {{/hits}}
@@ -121,27 +141,34 @@
   <!-- [Result page] No-Results template -->
   <script type="text/template" id="no-results-template">
     <div id="no-results-message">
-    <p>We didn't find any results for the search <em>"{{ query }}"</em>.</p>
-    <ul>
-      {{#filters}}
-        <li class="{{ class }}" data-facet="{{ facet }}" data-value="{{ facet_value }}">
-          {{ label }}<span class="value">{{ label_value }}</span>
-        </li>
-      {{/filters}}
-      <br>
-      <a href="" class='clear-all'>Clear all</a>
-    </ul>
+      <p>We didn't find any results for the search <em>"{{ query }}"</em>.</p>
+      <ul>
+        {{#filters}}
+          <li class="{{ class }}" data-facet="{{ facet }}" data-value="{{ facet_value }}">
+            {{ label }}<span class="value">{{ label_value }}</span>
+          </li>
+        {{/filters}}
+      </ul>
+      <a href="" class="clear-all">Clear all</a>
     </div>
   </script>
 
   <!-- [Result page] Pagination template -->
   <script type="text/template" id="pagination-template">
     <ul>
-      <li {{^prev_page}}class="disabled"{{/prev_page}}><a href="#" {{#prev_page}}class="go-to-page" data-page="{{ prev_page }}"{{/prev_page}}>&#60;</a></li>
+      <li {{^prev_page}}class="disabled"{{/prev_page}}>
+        <a href="#" {{#prev_page}}class="go-to-page" data-page="{{ prev_page }}"{{/prev_page}}>&#60;</a>
+      </li>
+
       {{#pages}}
-      <li class="{{#current}}active{{/current}} {{#disabled}}disabled{{/disabled}}"><a href="#" {{^disabled}} class="go-to-page" data-page="{{ number }}" {{/disabled}}>{{ number }}</a></li>
+      <li class="{{#current}}active{{/current}} {{#disabled}}disabled{{/disabled}}">
+        <a href="#" {{^disabled}} class="go-to-page" data-page="{{ number }}" {{/disabled}}>{{ number }}</a>
+      </li>
       {{/pages}}
-      <li {{^next_page}}class="disabled"{{/next_page}}><a href="#" {{#next_page}}class="go-to-page" data-page="{{ next_page }}"{{/next_page}}>&#62;</a></li>
+
+      <li {{^next_page}}class="disabled"{{/next_page}}>
+        <a href="#" {{#next_page}}class="go-to-page" data-page="{{ next_page }}"{{/next_page}}>&#62;</a>
+      </li>
     </ul>
   </script>
 

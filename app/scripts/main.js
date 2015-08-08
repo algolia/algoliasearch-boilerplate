@@ -9,7 +9,7 @@ $(document).ready(function() {
   var APPLICATION_ID = 'latency';
   var SEARCH_ONLY_API_KEY = '6be0576ff61c053d5f9a3225e2a90f76';
   var INDEX_NAME = 'bestbuy';
-  var HITS_PER_PAGE = 10;
+  var HITS_PER_PAGE = 12;
   var MAX_VALUES_PER_FACET = 8;
   var FACETS_LABELS = { type: 'Type', shipping: 'Shipping', customerReviewCount: '# Reviews', type: 'Type'};
   var FACET_CONFIG = [
@@ -39,9 +39,12 @@ $(document).ready(function() {
   var $facets = $('#facets');
   var $main = $('main');
   var $pagination = $('#pagination');
+  var $resultsTemplate = $('#resultsTemplate');
 
   // Hogan templates binding
-  var hitTemplate = Hogan.compile($('#hit-template').text());
+  var hitTemplateList = Hogan.compile($('#hit-template-list').text());
+  var hitTemplateGrid = Hogan.compile($('#hit-template-grid').text());
+  hitTemplate = hitTemplateList; //default results template
   var statsTemplate = Hogan.compile($('#stats-template').text());
   var facetTemplate = Hogan.compile($('#facet-template').text());
   var sliderTemplate = Hogan.compile($('#slider-template').text());
@@ -50,6 +53,7 @@ $(document).ready(function() {
   var productSuggestionTemplate = Hogan.compile($('#product-suggestion-template').text());
   var manufacturerSuggestionTemplate = Hogan.compile($('#manufacturer-suggestion-template').text());
   var categorySuggestionTemplate = Hogan.compile($('#category-suggestion-template').text());
+  var resultsTemplateSelectionTemplate = Hogan.compile($('#category-suggestion-template').text());
 
 
 
@@ -319,6 +323,24 @@ $(document).ready(function() {
   $(document).on('click', '#search-input-icon',function(e) {
     e.preventDefault();
     $inputField.val('').keyup().focus();
+  });
+  $(document).on('click', '#results-template a',function(e) {
+    e.preventDefault();
+    $('#results-template a').removeClass('active');
+    $(this).addClass('active');
+    var template = $(this).data('template');
+    var templates = {
+      "list": hitTemplateList,
+      "grid": hitTemplateGrid
+    };
+    var hits_per_page = {
+      "list": HITS_PER_PAGE,
+      "grid": 20
+    };
+    //fixme HITS_PER_PAGE
+    //
+    hitTemplate=templates[template];
+    algoliaHelper.setQueryParameter('hitsPerPage', hits_per_page[template]).search();
   });
 
 

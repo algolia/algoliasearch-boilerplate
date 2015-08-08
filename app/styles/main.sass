@@ -204,46 +204,143 @@ body, h1, h2, h3, h4, h5, p, input
   padding: 10px 0
   border-top: 2px solid #EEE
 
-.hit
-  padding: 8px 0
-  border-bottom: 1px solid #EEE
-  font-size: 0
+.hit-wrapper
+  //shared by all results template
+  .hit-content
+    font-size: 13px
+    font-weight: 300
+    .hit-price
+      font-size: 20px
+      font-weight: normal
+      color: $primary-color
+    .hit-name
+      margin-top: 0
+      font-weight: normal
+    em
+      background: #FBDDE0
+      font-style: normal
+    .hit-description
+      color: #999
 
-.hit-image
-  display: inline-block
-  width: 16%
-  img
-    max-width: 100%
-    max-height: 180px
+  &.template-list // specific to list
+    padding: 8px 0
+    border-bottom: 1px solid #EEE
+    font-size: 0
+    .hit-content
+      display: inline-block
+      width: 83%
+      margin-left: 1%
+      vertical-align: top
+    .hit-image
+      display: inline-block
+      width: 16%
+      img
+        max-width: 100%
+        max-height: 180px
+    .hit-price
+      float: right
+      margin-left: 20px
+      margin-top: 0
 
-.hit-content
-  display: inline-block
-  width: 83%
-  margin-left: 1%
-  font-size: 13px
+  &.template-grid //specific to grid
+    box-sizing: border-box
+    float: left
+    width: 33.33%
+    padding: 5px
+    border: solid 1px #ccc
+    height: 240px
+    .hit
+      position: relative
+    .hit-name
+      text-align: center
+      font-size: 15px
+    .hit-image
+      text-align: center
+      img
+        max-width: 100%
+        max-height: 200px
+    .hit-price
+      position: absolute
+      top: 5px
+      right: 5px
+
+
+/* SORT-BY ------------------------- */
+
+#sort-by
+  position: relative
+  float: right
+  margin-right: 16px
+  line-height: 38px
   font-weight: 300
-  vertical-align: top
-  .hit-price
-    float: right
-    margin-left: 20px
-    margin-top: 0
-    font-size: 20px
-    font-weight: normal
-    color: $primary-color
-  .hit-name
-    margin-top: 0
-    font-weight: normal
-  em
-    background: #FBDDE0
-    font-style: normal
-  .hit-description
+  color: #999
+  select
+    padding-right: 14px
+    background: none
+    border: none
+    font-size: 16px
+    outline: none
+    cursor: pointer
+    -webkit-appearance: none
+    -moz-appearance: none
+  .caret
+    display: inline-block
+    width: 0
+    height: 0
+    position: absolute
+    right: 0
+    top: 18px
+    margin-left: 2px
+    vertical-align: middle
+    border-top: 4px dashed
+    border-right: 4px solid transparent
+    border-left: 4px solid transparent
+    pointer-events: none
+    color: #000
+
+
+/* STATS ------------------------- */
+
+#stats
+  float: left
+  line-height: 38px
+  .found-in
+    font-size: 12px
     color: #999
 
+
+/* RESULTS TEMPLATE SWITCH ------------ */
+#results-template
+  float: right
+  display: inline-block
+  border: solid 1px #ccc
+  border-radius: 3px
+  a
+    display: block
+    float: left
+    padding: 6px 8px
+    background-image: url(/images/templates.png)
+    background-repeat: no-repeat
+    width: 14px
+    text-indent: -9000px
+    &.display-list
+      background-position: -18px 8px
+      background-color: #eee
+      border-right: solid 1px #ccc
+      &.active
+        background-position: -18px -14px
+        background-color: white
+    &.display-grid
+      background-position: 8px 8px
+      background-color: #eee
+      &.active
+        background-position: 8px -14px
+        background-color: white
 
 /* PAGINATION ------------------------- */
 
 #pagination
-  margin-top: 60px
+  margin: 60px 0
   ul
     list-style-type: none
     text-align: center
@@ -278,46 +375,6 @@ body, h1, h2, h3, h4, h5, p, input
       &:hover
         background: none
 
-
-/* SORT-BY ------------------------- */
-
-#sort-by
-  float: right
-  position: relative
-  color: #999
-  font-weight: 300
-  select
-    padding-right: 14px
-    background: none
-    border: none
-    font-size: 16px
-    outline: none
-    cursor: pointer
-    -webkit-appearance: none
-    -moz-appearance: none
-  .caret
-    display: inline-block
-    width: 0
-    height: 0
-    position: absolute
-    right: 0
-    top: 8px
-    margin-left: 2px
-    vertical-align: middle
-    border-top: 4px dashed
-    border-right: 4px solid transparent
-    border-left: 4px solid transparent
-    pointer-events: none
-    color: #000
-
-
-/* STATS ------------------------- */
-
-#stats
-  min-height: 18px
-  .found-in
-    font-size: 12px
-    color: #999
 
 /* No-result ------------------------- */
 
@@ -436,4 +493,16 @@ li.refined .facet-link
   .irs-slider
     cursor: pointer
 
+/* HELPERS ------------------------- */
+
+//boostrap clearfix
+.clearfix
+  *zoom: 1
+  &:before,
+  &:after
+    display: table
+    content: ""
+    line-height: 0
+  &:after
+    clear: both
 
