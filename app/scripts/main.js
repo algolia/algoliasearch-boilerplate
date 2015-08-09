@@ -90,10 +90,19 @@ $(document).ready(function() {
       }
     }
   ]);
-  $autocompleteField.on('keyup', function() {
-    $('#autocomplete-icon').toggleClass('empty', $(this).val().trim());
+
+  $autocompleteField.on('keyup', function(e) {
+    e.preventDefault();
+    var inputValue = $(this).val().trim();
+    if (inputValue.length > 0) {
+      $('#autocomplete-icon').addClass('is-empty');
+    } else {
+      $('#autocomplete-icon').removeClass('is-empty');
+    }
+
   });
-  $(document).on('click', '#autocomplete-icon',function(e) {
+
+  $(document).on('click', '#autocomplete-icon', function(e) {
     e.preventDefault();
     $autocompleteField.val('').keyup().focus();
   });
@@ -105,7 +114,7 @@ $(document).ready(function() {
 
   // Input binding
   $inputField
-  .on('keyup', function() {
+  .on('keyup', function(e) {
     var query = $(this).val();
     toggleIconEmptyInput(!query.trim());
     algoliaHelper.setQuery(query).search();
