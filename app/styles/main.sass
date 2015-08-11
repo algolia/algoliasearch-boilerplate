@@ -426,6 +426,7 @@ body, h1, h2, h3, h4, h5, p, input
     font-weight: bold
     color: #000
   a.remove
+    cursor: pointer
     img
       position: absolute
       top: 3px
@@ -452,64 +453,104 @@ body, h1, h2, h3, h4, h5, p, input
       border-color: #999
 
 /* FACETS ------------------------- */
-
-.facet
+.facet-container
   margin-bottom: 24px
-  h5
+
+  .title
     padding: 0 0 6px
     margin: 0 0 6px
     text-transform: uppercase
     border-bottom: 2px solid #EEE
+
   ul
     list-style-type: none
     padding: 0
     margin: 0
-  li
-    margin-bottom: 3px
 
-.facet-link
-  font-size: 13px
-  line-height: 1.2
-  text-decoration: none
-  color: #000
-  &:hover
-    color: $primary-color
+  &.default-display
+    .facet-item
+      margin-bottom: 3px
 
-li.refined .facet-link
-  color: $primary-color
+      .facet-label
+        font-size: 13px
+        line-height: 1.2
+        text-decoration: none
+        color: #000
+        &:hover
+          color: $primary-color
 
-.facet li.refined .facet-link:hover
-  color: $primary-color
-  text-decoration: line-through
+      .facet-count
+        float: right
+        position: relative
+        top: 3px
+        color: #999
 
-.facet-count
-  float: right
-  position: relative
-  top: 3px
-  color: #999
+      &.is-refined 
 
-/* Checkboxes
+        .facet-item
+          .facet-link
+            color: $primary-color
+            &:hover
+              color: $primary-color
+              text-decoration: line-through
 
-.facet-disjunctive
-  margin-left: 18px
-  position: relative
-  font-weight: normal
-  &:before
-    content: ""
-    position: absolute
-    top: 1px
-    left: -18px
-    width: 16px
-    height: 16px
-    background: url(/images/icons.png) -25px 0 no-repeat
-  &:hover:before
-    background-position: -25px -24px
+    .is-disjunctive
+      .facet-item
+        .facet-label
+          margin-left: 18px
+          position: relative
+          font-weight: normal
+          &:before
+            content: ""
+            position: absolute
+            top: 1px
+            left: -18px
+            width: 16px
+            height: 16px
+            background: url(/images/icons.png) -25px 0 no-repeat
+          &:hover:before
+            background-position: -25px -24px
 
-.facet li.refined .facet-disjunctive
-  &:before
-    background-position: -1px 0
-  &:hover:before
-    background-position: -49px 0px
+        &.is-refined
+          .facet-label
+            &:before
+              background-position: -1px 0
+            &:hover:before
+              background-position: -49px 0px
+
+  &.tag-display
+    .facet-item
+      font-size: 13px
+      position: relative
+      display: inline-block
+      margin: 4px 2px
+      padding: 4px 8px
+      
+      // background: black
+      border: 1px solid #ddd
+      border-radius: 12px
+      
+      .facet-label
+        color: #000
+        // font-weight: bold
+        font-style: normal
+        text-decoration: none
+
+      .facet-count
+        margin-left: 6px
+        opacity: .6
+        &:before
+          content: '('
+        &:after
+          content: ')'
+
+      &.is-refined
+        background: $primary-color
+        border-color: $primary-color
+
+        .facet-label
+          color: #fff
+
 
 
 /* SLIDER ------------------------- */

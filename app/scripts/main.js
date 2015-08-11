@@ -16,7 +16,7 @@ $(document).ready(function() {
   { name: 'customerReviewCount', title: '# Reviews', disjunctive: true, type: 'slider' },
   { name: 'category', title: 'Category', disjunctive: true, sortFunction: sortByCountDesc, topListIfRefined: true },
   { name: 'salePrice_range', title: 'Price range', disjunctive: true, sortFunction: sortByName },
-  { name: 'manufacturer', title: 'Manufacturer', disjunctive: true, sortFunction: sortByName, topListIfRefined: true }
+  { name: 'manufacturer', title: 'Manufacturer', disjunctive: true, sortFunction: sortByName, topListIfRefined: true, cssClass: 'tag-display' }
   ];
 
   // Client + Helper initialization
@@ -202,6 +202,7 @@ $(document).ready(function() {
           facet: facetName,
           title: facetTitle,
           values: values,
+          cssClass: facetParams.cssClass || 'default-display',
           disjunctive: facetParams.disjunctive
         };
         facetsHtml += facetTemplate.render(facetContent);

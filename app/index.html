@@ -118,12 +118,12 @@
 
   <!-- [Result page] Facet template -->
   <script type="text/template" id="facet-template">
-    <div class="facet">
-      <h5>{{ title }}</h5>
-      <ul>
+    <div class="facet-container {{ cssClass }}">
+      <h5 class="title">{{ title }}</h5>
+      <ul class="{{#disjunctive}}is-disjunctive{{/disjunctive}}">
         {{#values}}
-        <li {{#refined}}class="refined"{{/refined}}>
-          <a href="" class="facet-link toggle-refine {{#disjunctive}}facet-disjunctive{{/disjunctive}}" data-facet="{{ facet }}" data-value="{{ value }}">
+        <li class="facet-item {{#refined}}is-refined{{/refined}}">
+          <a href="#" class="facet-label toggle-refine" data-facet="{{ facet }}" data-value="{{ value }}">
             {{ label }}<small class="facet-count">{{ count }}</small>
           </a>
         </li>
@@ -134,8 +134,8 @@
 
   <!-- [Result page] Slider template -->
   <script type="text/template" id="slider-template">
-    <div class="facet">
-      <h5>{{ title }}</h5>
+    <div class="facet-container">
+      <h5 class="title">{{ title }}</h5>
       <input type="text" id="{{ facet }}-slider" data-min="{{ min }}" data-max="{{ max }}" data-from="{{ from }}" data-to="{{ to }}"/>
     </div>
   </script>
