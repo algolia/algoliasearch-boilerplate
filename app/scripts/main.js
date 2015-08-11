@@ -11,12 +11,12 @@ $(document).ready(function() {
 
   var MAX_VALUES_PER_FACET = 8;
   var FACET_CONFIG = [
-    { name: 'type', title: 'Type', disjunctive: false, sortFunction: sortByCountDesc },
-    { name: 'shipping', title: 'Shipping', disjunctive: false, sortFunction: sortByCountDesc },
-    { name: 'customerReviewCount', title: '# Reviews', disjunctive: true, type: 'slider' },
-    { name: 'category', title: 'Category', disjunctive: true, sortFunction: sortByCountDesc, topListIfRefined: true },
-    { name: 'salePrice_range', title: 'Price range', disjunctive: true, sortFunction: sortByName },
-    { name: 'manufacturer', title: 'Manufacturer', disjunctive: true, sortFunction: sortByName, topListIfRefined: true }
+  { name: 'type', title: 'Type', disjunctive: false, sortFunction: sortByCountDesc },
+  { name: 'shipping', title: 'Shipping', disjunctive: false, sortFunction: sortByCountDesc },
+  { name: 'customerReviewCount', title: '# Reviews', disjunctive: true, type: 'slider' },
+  { name: 'category', title: 'Category', disjunctive: true, sortFunction: sortByCountDesc, topListIfRefined: true },
+  { name: 'salePrice_range', title: 'Price range', disjunctive: true, sortFunction: sortByName },
+  { name: 'manufacturer', title: 'Manufacturer', disjunctive: true, sortFunction: sortByName, topListIfRefined: true }
   ];
 
   // Client + Helper initialization
@@ -65,30 +65,30 @@ $(document).ready(function() {
   $autocompleteField.autocomplete({
     hint: false
   }, [
-    {
-      name: 'products',
-      source: algolia.initIndex('bestbuy').ttAdapter({ hitsPerPage: 3 }),
-      templates: {
-        header: '<h3 class="aa-header">Products</h3>',
-        suggestion: productSuggestionTemplate.render.bind(productSuggestionTemplate)
-      }
-    },
-    {
-      name: 'manufacturers',
-      source: algolia.initIndex('bestbuy_manufacturers').ttAdapter({ hitsPerPage: 3 }),
-      templates: {
-        header: '<h3 class="aa-header">Manufacturers</h3>',
-        suggestion: manufacturerSuggestionTemplate.render.bind(manufacturerSuggestionTemplate)
-      }
-    },
-    {
-      name: 'categories',
-      source: algolia.initIndex('bestbuy_categories').ttAdapter({ hitsPerPage: 3 }),
-      templates: {
-        header: '<h3 class="aa-header">Categories</h3>',
-        suggestion: categorySuggestionTemplate.render.bind(categorySuggestionTemplate)
-      }
+  {
+    name: 'products',
+    source: algolia.initIndex('bestbuy').ttAdapter({ hitsPerPage: 3 }),
+    templates: {
+      header: '<h3 class="aa-header">Products</h3>',
+      suggestion: productSuggestionTemplate.render.bind(productSuggestionTemplate)
     }
+  },
+  {
+    name: 'manufacturers',
+    source: algolia.initIndex('bestbuy_manufacturers').ttAdapter({ hitsPerPage: 3 }),
+    templates: {
+      header: '<h3 class="aa-header">Manufacturers</h3>',
+      suggestion: manufacturerSuggestionTemplate.render.bind(manufacturerSuggestionTemplate)
+    }
+  },
+  {
+    name: 'categories',
+    source: algolia.initIndex('bestbuy_categories').ttAdapter({ hitsPerPage: 3 }),
+    templates: {
+      header: '<h3 class="aa-header">Categories</h3>',
+      suggestion: categorySuggestionTemplate.render.bind(categorySuggestionTemplate)
+    }
+  }
   ]);
 
   $autocompleteField.on('keyup', function(e) {
@@ -333,7 +333,7 @@ $(document).ready(function() {
   // EVENTS BINDING
   // ==============
 
-  $(document).on('click', 'a.toggle-refine', function(e) {
+  $(document).on('click', '.toggle-refine', function(e) {
     e.preventDefault();
     algoliaHelper.toggleRefine($(this).data('facet'), $(this).data('value')).search();
   });
@@ -354,6 +354,11 @@ $(document).ready(function() {
     $inputField.val('').keyup().focus();
   });
 
+  $(document).on('click', '.remove-numeric-refine', function(e) {
+    e.preventDefault();
+    algoliaHelper.removeNumericRefinement($(this).data('facet'), $(this).data('value')).search();
+  });
+  
   $(document).on('click', '#results-layout-choice a', function(e) {
     e.preventDefault();
 

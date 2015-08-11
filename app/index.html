@@ -146,9 +146,9 @@
       <p>No results for the search <em>"{{ query }}"</em>.</p>
       <ul>
         {{#filters}}
-          <li class="{{ class }}" data-facet="{{ facet }}" data-value="{{ facet_value }}">
-            {{ label }}<span class="value">{{ label_value }}</span>
-          </li>
+        <li class="{{ class }}" data-facet="{{ facet }}" data-value="{{ facet_value }}">
+          {{ label }}<span class="value">{{ label_value }}</span><a class="remove"><img src="/images/remove.png"/></a>
+        </li>
         {{/filters}}
       </ul>
       <a href="" class="clear-all-btn">Clear all</a>
@@ -162,50 +162,50 @@
         <a href="#" {{#prev_page}}class="go-to-page" data-page="{{ prev_page }}"{{/prev_page}}>&#60;</a>
       </li><!--
       {{#pages}}
-      --><li class="{{#current}}active{{/current}} {{#disabled}}disabled{{/disabled}}">
-        <a href="#" {{^disabled}} class="go-to-page" data-page="{{ number }}" {{/disabled}}>{{ number }}</a>
+    --><li class="{{#current}}active{{/current}} {{#disabled}}disabled{{/disabled}}">
+    <a href="#" {{^disabled}} class="go-to-page" data-page="{{ number }}" {{/disabled}}>{{ number }}</a>
       </li><!--
       {{/pages}}
-      --><li {{^next_page}}class="disabled"{{/next_page}}>
-        <a href="#" {{#next_page}}class="go-to-page" data-page="{{ next_page }}"{{/next_page}}>&#62;</a>
-      </li>
-    </ul>
-  </script>
+    --><li {{^next_page}}class="disabled"{{/next_page}}>
+    <a href="#" {{#next_page}}class="go-to-page" data-page="{{ next_page }}"{{/next_page}}>&#62;</a>
+  </li>
+</ul>
+</script>
 
 
-  <!-- [Autocomplete] Product Suggestion template -->
-  <script type="text/template" id="product-suggestion-template">
-    <div class="product-suggestion">
-      <div class="suggestion-image">
-        <img src="{{ image }}" alt="{{ name }}">
-      </div>
-      <div class="suggestion-content">
-        <h4 class="suggestion-price">${{ salePrice }}</h4>
-        <h3 class="suggestion-name">{{{ _highlightResult.name.value }}}</h3>
-        <p class="suggestion-description">{{{ _highlightResult.shortDescription.value }}}</p>
-      </div>
+<!-- [Autocomplete] Product Suggestion template -->
+<script type="text/template" id="product-suggestion-template">
+  <div class="product-suggestion">
+    <div class="suggestion-image">
+      <img src="{{ image }}" alt="{{ name }}">
     </div>
-  </script>
+    <div class="suggestion-content">
+      <h4 class="suggestion-price">${{ salePrice }}</h4>
+      <h3 class="suggestion-name">{{{ _highlightResult.name.value }}}</h3>
+      <p class="suggestion-description">{{{ _highlightResult.shortDescription.value }}}</p>
+    </div>
+  </div>
+</script>
 
-  <!-- [Autocomplete] Manufacturer Suggestion template -->
-  <script type="text/template" id="manufacturer-suggestion-template">
-    {{{ _highlightResult.name.value }}} <small class="text-muted">({{ count }})</small>
-  </script>
+<!-- [Autocomplete] Manufacturer Suggestion template -->
+<script type="text/template" id="manufacturer-suggestion-template">
+  {{{ _highlightResult.name.value }}} <small class="text-muted">({{ count }})</small>
+</script>
 
-  <!-- [Autocomplete] Category Suggestion template -->
-  <script type="text/template" id="category-suggestion-template">
-    {{{ _highlightResult.name.value }}} <small class="text-muted">({{ count }})</small>
-  </script>
+<!-- [Autocomplete] Category Suggestion template -->
+<script type="text/template" id="category-suggestion-template">
+  {{{ _highlightResult.name.value }}} <small class="text-muted">({{ count }})</small>
+</script>
 
-  <!-- ########## JS Inclusions ########### -->
-  <!-- ##################################### -->
-  <script src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
-  <script src="//cdn.jsdelivr.net/algoliasearch.helper/2/algoliasearch.helper.min.js"></script>
-  <script src="//cdn.jsdelivr.net/hogan.js/3.0.2/hogan.min.common.js"></script>
-  <script src="//cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/jquery.ion.rangeslider/2.0.12/js/ion.rangeSlider.min.js"></script>
-  <script src="scripts/main.js"></script>
+<!-- ########## JS Inclusions ########### -->
+<!-- ##################################### -->
+<script src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+<script src="//cdn.jsdelivr.net/algoliasearch.helper/2/algoliasearch.helper.min.js"></script>
+<script src="//cdn.jsdelivr.net/hogan.js/3.0.2/hogan.min.common.js"></script>
+<script src="//cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/jquery.ion.rangeslider/2.0.12/js/ion.rangeSlider.min.js"></script>
+<script src="scripts/main.js"></script>
 
 </body>
 </html>
