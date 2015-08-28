@@ -4,6 +4,8 @@
 
 $header-color: #0c1724 // Dark
 $primary-color: #ED5565 //Mandy
+$highlight-color: mix($primary-color, #FFF, 25%)
+$hover-color: mix($primary-color, #FFF, 10%)
 $base-font-family: 'Helvetica Neue', Helvetica, sans-serif
 $sidebar-width: 23%
 $gutter-width: 3%
@@ -112,9 +114,9 @@ body, h1, h2, h3, h4, h5, p, input
       text-align: left
       cursor: pointer
       &.aa-cursor
-        background-color: #FDDED9
+        background-color: $hover-color
       em
-        background: #FBDDE0
+        background: $highlight-color
         font-style: normal
       .product-suggestion
         font-size: 0
@@ -126,8 +128,8 @@ body, h1, h2, h3, h4, h5, p, input
           max-height: 50px
       .suggestion-content
         display: inline-block
-        width: 89%
-        margin-left: 1%
+        width: 87%
+        margin-left: 3%
         font-size: 13px
         font-weight: 300
         vertical-align: top
@@ -220,7 +222,7 @@ body, h1, h2, h3, h4, h5, p, input
       margin-top: 0
       font-weight: normal
     em
-      background: #FBDDE0
+      background: $highlight-color
       font-style: normal
     .hit-description
       color: #999
@@ -485,7 +487,7 @@ body, h1, h2, h3, h4, h5, p, input
         top: 3px
         color: #999
 
-      &.is-refined 
+      &.is-refined
 
         .facet-item
           .facet-link
@@ -525,11 +527,11 @@ body, h1, h2, h3, h4, h5, p, input
       display: inline-block
       margin: 4px 2px
       padding: 4px 8px
-      
+
       // background: black
       border: 1px solid #ddd
       border-radius: 12px
-      
+
       .facet-label
         color: #000
         // font-weight: bold
