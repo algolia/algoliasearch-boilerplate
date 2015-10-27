@@ -229,10 +229,16 @@ $(document).ready(function() {
         },
         onFinish: function (data) {
           if (data.from !== (state.getNumericRefinement(facetName, '>=') || data.min)) {
-            algoliaHelper.addNumericRefinement(facetName, '>=', data.from).search();
+            algoliaHelper
+              .removeNumericRefinement(facetName, '>=')
+              .addNumericRefinement(facetName, '>=', data.from)
+              .search();
           }
           if (data.to !== (state.getNumericRefinement(facetName, '<=') || data.max)) {
-            algoliaHelper.addNumericRefinement(facetName, '<=', data.to).search();
+            algoliaHelper
+              .removeNumericRefinement(facetName, '<=')
+              .addNumericRefinement(facetName, '<=', data.to)
+              .search();
           }
         }
       };
