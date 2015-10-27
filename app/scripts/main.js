@@ -231,15 +231,14 @@ $(document).ready(function() {
           if (data.from !== (state.getNumericRefinement(facetName, '>=') || data.min)) {
             algoliaHelper
               .removeNumericRefinement(facetName, '>=')
-              .addNumericRefinement(facetName, '>=', data.from)
-              .search();
+              .addNumericRefinement(facetName, '>=', data.from);
           }
           if (data.to !== (state.getNumericRefinement(facetName, '<=') || data.max)) {
             algoliaHelper
               .removeNumericRefinement(facetName, '<=')
-              .addNumericRefinement(facetName, '<=', data.to)
-              .search();
+              .addNumericRefinement(facetName, '<=', data.to);
           }
+          algoliaHelper.search();
         }
       };
       slider.ionRangeSlider(sliderOptions);
